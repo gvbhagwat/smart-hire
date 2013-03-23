@@ -1,0 +1,14 @@
+#summary One-sentence summary of this page.
+#labels Mysql
+
+= How to start MySql server =
+
+mysql -h localhost -u root -p<YOURPASSWORD>
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
