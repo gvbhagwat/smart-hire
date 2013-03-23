@@ -3,7 +3,7 @@
 
 = How to start MySql server =
 
-mysql -h localhost -u root -p<YOURPASSWORD>
+mysql -h localhost -u root -pYOURPASSWORD
 
 
 = Details =
