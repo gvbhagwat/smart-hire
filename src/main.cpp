@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "sim.hpp"
-#include "Scenario.hpp"
+#include "BaseScenario.hpp"
 #include "Event.hpp"
 
 using namespace std;

@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS = -Wall -pg 
 
-CLASSES_O = sim.o Event.o Scenario.o Location.o Battery.o Distance.o Car.o
+CLASSES_O = sim.o Event.o Scenario.o Location.o Battery.o Distance.o Car.o PassengerRequestEvent.o PassengerServicedEvent.o CarBatteryRechargeEvent.o
 
 all: sim
 
