@@ -30,6 +30,7 @@ void init()
 	publishCars();
 	pushPassengerRequests();
 }
+
 void publishCars()
 {
 	int i,LocationID;

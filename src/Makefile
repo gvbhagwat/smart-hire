@@ -1,15 +1,15 @@
 CC=g++
-CFLAGS = -Wall -pg 
+CFLAGS = -w -pg 
 
-CLASSES_O = sim.o Event.o Scenario.o Location.o Battery.o Distance.o Car.o PassengerRequestEvent.o PassengerServicedEvent.o CarBatteryRechargeEvent.o
+CLASSES_O = sim.o Event.o Scenario.o Location.o Battery.o Distance.o Car.o Revenue.o PassengerRequestEvent.o PassengerServicedEvent.o CarBatteryRechargeEvent.o
 
 all: sim
 
 $(CLASSES_O): %.o : %.cpp %.hpp sim.hpp
-	$(CC) -c -w $(CFLAGS) $< -o $@
+	$(CC) -c $(CFLAGS) $< -o $@
 
 main.o: main.cpp sim.hpp
-	$(CC) -c -w $(CFLAGS) $< -o $@
+	$(CC) -c $(CFLAGS) $< -o $@
 
 config.yy.c : config.l config.h
 	lex -o config.yy.c config.l
