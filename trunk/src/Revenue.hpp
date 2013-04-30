@@ -21,15 +21,48 @@ class Revenue {
 
 	Revenue();
 	
+	/**
+	 * add the profitable income
+	 * @param directly specify the amount
+	 */
 	void addEarnings(double amount);
-	void addEarnings(double amount, Distance& d);
 
+	/**
+	 * add to the profitable income calcuated by the metering model
+	 * @param distance travelled recently
+	 */
+	void addEarningsByDistance(int metres);
+
+	/**
+	 * @return the earnings
+	 */
 	double getEarnings();
 
+	/**
+	 * add to the losses
+	 * @param directly specify the amount
+	 */
 	void addLosses(double amount);
-	void addLosses(double amount, Distance& d);
 
+
+	/**
+	 * add to the losses by distance travelled as per the metering model
+	 * @param specify the distance travelled
+	 */
+	void addLossesByDistance(int metres);
+
+
+	/**
+	 * @return losses
+	 */
 	double getLosses();
+
+	/**
+	 * @return losses + revenue
+	 *
+	 */
+	double getTotalRevenue();
+
 
 };
 

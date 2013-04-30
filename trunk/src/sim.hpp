@@ -15,18 +15,36 @@ extern "C" {
 #define METRE		config_get_int("METRE")
 #define KM			config_get_int("KM")
 
-/* Simulation Parameters */
-#define NUMBER_OF_CARS		config_get_int("NUMBER_OF_CARS")
+/* Simulation seed */
+#define SEED_CAR_LOCATION	config_get_int("SEED_CAR_LOCATION")
+#define SEED_ITINERARY		config_get_int("SEED_ITINERARY")
 
 /* Simulation time */
-#define SIM_TIME 			config_get_double("SIM_TIME")
+#define SIM_DURATION 		config_get_double("SIM_DURATION")
 #define SIM_START 			config_get_double("SIM_START")
 #define SIM_END				config_get_double("SIM_END")
 
+/* Simulation Parameters CUSTOMER INFORMATION */
+#define MIN_WAITING_TIME						config_get_double("MIN_WAITING_TIME")
+#define MAX_WAITING_TIME						config_get_double("MAX_WAITING_TIME")
+#define PASSENGER_REQUEST_COUNT					config_get_int("PASSENGER_REQUEST_COUNT")
+
+/* Simulation Parameters CAR INFORMATION*/
+#define NUMBER_OF_CARS							config_get_int("NUMBER_OF_CARS")
+
+#define BATTERY_DEPTH_OF_DISCHARGE				config_get_double("BATTERY_DEPTH_OF_DISCHARGE")
+#define BATTERY_DISCHARGE_PER_METRE				config_get_double("BATTERY_DISCHARGE_PER_METRE")
+#define BATTERY_MAX_CHARGE						config_get_double("BATTERY_MAX_CHARGE")
+
+#define FARE_MINIMUM							config_get_double("FARE_MINIMUM")
+#define DISTANCE_MINIMUM_FARE_IN_METRES			config_get_int("DISTANCE_MINIMUM_FARE_IN_METRES")
+#define FARE_ABOVE_MINIMUM_FARE_PER_KM			config_get_double("FARE_ABOVE_MINIMUM_FARE_PER_KM")
+
+
 /* Simulation Resources */
-#define DISTANCE_MATRIX_RESOURCE_FILE 		config_get_string("DISTANCE_MATRIX_RESOURCE_FILE")
-#define TIME_MATRIX_RESOURCE_FILE 			config_get_string("TIME_MATRIX_RESOURCE_FILE")
-#define STATION_COORDINATES_RESOURCE_FILE 	config_get_string("STATIONS_COORDINATES_RESOURCE_FILE")
+#define DISTANCE_MATRIX_RESOURCE_FILE 			config_get_string("DISTANCE_MATRIX_RESOURCE_FILE")
+#define TIME_MATRIX_RESOURCE_FILE 				config_get_string("TIME_MATRIX_RESOURCE_FILE")
+#define STATION_COORDINATES_RESOURCE_FILE 		config_get_string("STATIONS_COORDINATES_RESOURCE_FILE")
 
 /* Simulation Output Dumps */
 #define CARS_BATTERY_POWER_DAT_FILE 			config_get_string("CARS_BATTERY_POWER_DAT_FILE")
@@ -42,9 +60,15 @@ extern "C" {
 
 #define SERVICE_PER_LOCATION_STATS_FILE 		config_get_string("SERVICE_PER_LOCATION_STATS_FILE")
 
+
+/* Meta configuration */
+#define EXEC_TRACE	config_get_int("EXEC_TRACE")
+#define SIM_TRACE	config_get_int("SIM_TRACE")	
+
 /* Some common utility functions */
-// #define MIN(a, b)	((a < b) ? a : b)
-// #define MAX(a, b)	((a > b) ? a : b)
+
+#define MIN(a, b)	((a < b) ? a : b)
+#define MAX(a, b)	((a > b) ? a : b)
 
 void seedRandomizer();
 double frand();

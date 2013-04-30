@@ -11,22 +11,25 @@ class Distance {
 	protected:
 
 	/* Metered Distance travelled  (in metres) */
-	double metered;
+	unsigned int metered;
 
 	/* Non-metered Distance travelled  (in metres) */
-	double wastage;
+	unsigned int wastage;
 
 	public:
 
 	Distance();
 
-	void addMeteredDistance(double metres);
-	double getMeteredDistance();
+	
+	void addMeteredDistance(int metres);
 
-	void addWastage(double wastage);
-	double getWastage();
+	unsigned int getMeteredDistance();
 
-	double getTotalDistance();
+	void addWastage(int wastage);
+
+	unsigned int getWastage();
+
+	unsigned int getTotalDistance();
 	
 };
 
