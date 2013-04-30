@@ -1,9 +1,9 @@
 #ifndef CAR_HPP
 #define CAR_HPP
 
-/*
- * type which will probably belong to the simulator's event queue.
- * Unhandled events with the least time-stamp are handled first.
+/**
+ * The simulation entity worked with
+ * Car encapsulates the Battery, Revenue generated or lost and the total Distance travelled
  */
 
 #include "Battery.hpp"
@@ -24,10 +24,10 @@ class Car {
 	Battery battery;
 
 	/* Cumulative Revenue collected by the car till the current time */
-	Revenue revenue;
+	Revenue totalRevenue;
 	
 	/* Cumulative Distance travelled by the car till the current time */
-	Distance distance;
+	Distance cumDistance;
 
 	/* STATE - isHired*/
 	bool isHired;
