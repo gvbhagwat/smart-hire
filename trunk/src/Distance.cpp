@@ -5,6 +5,11 @@ Distance::Distance(){
 		wastage = 0;
 }
 
+Distance::Distance(const Distance& other){
+	metered = other.metered;
+	wastage = other.wastage;
+}
+
 void Distance::addMeteredDistance(int metres){
 		metered += metres;
 }

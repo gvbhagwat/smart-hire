@@ -20,6 +20,9 @@ class Revenue {
 	public:
 
 	Revenue();
+
+	Revenue( const Revenue& other);
+
 	
 	/**
 	 * add the profitable income

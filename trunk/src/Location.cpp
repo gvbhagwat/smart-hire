@@ -8,6 +8,10 @@ Location::Location(){
 
 }
 
+Location::Location(const Location& other):
+		id( other.id ), latitude( other.latitude ), longitude( other.longitude ){
+}
+
 Location::Location(int id){
   	this->id = id; latitude = 0.0; longitude = 0.0;
 }

@@ -12,6 +12,8 @@ class Location{
 	Location();
 	Location(int id);
 	Location(int id, double lat, double longi);
+	
+	Location( const Location& other);
 };
 
 #endif

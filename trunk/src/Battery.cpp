@@ -1,6 +1,21 @@
 #include "Battery.hpp"
 #include "sim.hpp"
 
+Battery::Battery(){
+
+	charge =BATTERY_MAX_CHARGE;
+	depthOfDischarge = BATTERY_DEPTH_OF_DISCHARGE;
+	dischargePerMetre = BATTERY_DISCHARGE_PER_METRE;
+
+	rechargeCount = 1;
+}
+
+Battery::Battery( const Battery& other):
+		charge(other.charge), depthOfDischarge(other.depthOfDischarge),
+		dischargePerMetre(other.dischargePerMetre), rechargeCount(other.rechargeCount){
+}
+
+
 /**
  * Constructor
  *
@@ -29,6 +44,9 @@ double Battery::getDepthOfDischarge(){
 	return depthOfDischarge;
 }
 
+double Battery::getDischargePerMetre(){
+	return dischargePerMetre;
+}
 
 /**
  * @return rechargeCount

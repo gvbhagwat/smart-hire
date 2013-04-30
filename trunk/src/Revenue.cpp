@@ -5,6 +5,10 @@ Revenue::Revenue(){
 		earnings = losses = 0.0;
 }
 
+Revenue::Revenue(const Revenue& other):
+	earnings( other.earnings ), losses( other.losses ){
+}
+
 void Revenue::addEarnings(double amount){
 		earnings += amount;
 }
