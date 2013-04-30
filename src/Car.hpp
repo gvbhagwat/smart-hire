@@ -9,6 +9,7 @@
 #include "Battery.hpp"
 #include "Distance.hpp"
 #include "Location.hpp"
+#include "Revenue.hpp"
 
 
 class Car {
@@ -53,5 +54,4 @@ class Car {
 
 
 };
-
 #endif

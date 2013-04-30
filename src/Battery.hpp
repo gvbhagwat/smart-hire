@@ -28,6 +28,14 @@ class Battery {
 	unsigned int rechargeCount;
 
 	public:
+	
+	/**
+	 * no argument constructor, all values initializaed according to the given in configuration file config.cfg
+	 */
+	Battery();
+
+	Battery(const Battery& other);
+
 
 	/**
 	 * @param initial charge
@@ -36,13 +44,21 @@ class Battery {
 	 */
 	Battery(double initialcharge, double depthOfDischarge, double dischargePerMetre);
 
+
+	
 	/**
-	 * @return current rate of charging 
+	 * @return rate by which the battery discharges
+	 */
+	double getDischargePerMetre();
+
+
+	/**
+	 * @return current charge state
 	 */
 	double getCurrentCharge();
 
 	/**
-	 * @return current rate of charging 
+	 * @return min permissible charge available
 	 */
 	double getDepthOfDischarge();
 

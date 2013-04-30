@@ -20,6 +20,7 @@ class Distance {
 
 	Distance();
 
+	Distance(const Distance& other);
 	
 	void addMeteredDistance(int metres);
 

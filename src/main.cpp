@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <vector>
 
 #include "sim.hpp"
 #include "BaseScenario.hpp"
@@ -8,6 +9,7 @@
 using namespace std;
 
 void testing();
+void carTesting();
 
 
 extern "C" {
@@ -20,7 +22,7 @@ int main(int argc, char** argv)
 	// Initialize config parameters
 	config_init(argv[1]);
 
-	testing();
+	carTesting();
 
 	// The scenario to execute. Will be instantiated depending on context
 	Scenario* scenario;
@@ -68,6 +70,46 @@ int main(int argc, char** argv)
 	// Exit
 	return 0;
 }
+
+void carTesting(){
+
+	int i = 0;
+	Battery b(BATTERY_MAX_CHARGE, BATTERY_DEPTH_OF_DISCHARGE, BATTERY_DISCHARGE_PER_METRE);
+	Location l;
+
+	Car* c1 = new Car(i,b,l);
+	Car* c2 = new Car(i+1,b,l);
+
+	cout<<"location l = (id,lat,long) = "<<l.id<<" "<<l.latitude<<" "<<l.longitude<<endl;
+	cout<<"b.current_rate = "<<b.getCurrentCharge()<<endl;
+	cout<<"b.depth_of_ischarge = "<<b.getDepthOfDischarge()<<endl;
+	cout<<"b.inital_rechargeCount = "<<b.getRechargeCount()<<endl;
+
+	cout<<"---Car "<<c1->getCarId()<<" ---"<<endl;
+	cout<<"location l = (id,lat,long) = "<<c1->currlocation.id<<" "<<c1->currlocation.latitude<<" "<<c1->currlocation.longitude<<endl;
+	cout<<"b.current_rate = "<<c1->battery.getCurrentCharge()<<endl;
+	cout<<"b.depth_of_ischarge = "<<c1->battery.getDepthOfDischarge()<<endl;
+	cout<<"b.inital_rechargeCount = "<<c1->battery.getRechargeCount()<<endl;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void testing(){
 
