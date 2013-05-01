@@ -29,12 +29,13 @@ class Car {
 	
 	/* Cumulative Distance travelled by the car till the current time */
 	Distance cumDistance;
+	
+	/* STATE - current Location of the Car */
+	Location currlocation;
 
 	/* STATE - isHired*/
 	bool isHired;
 
-	/* STATE - current Location of the Car */
-	Location currlocation;
 
 	public:
 
@@ -43,6 +44,8 @@ class Car {
 	Car(int id, Battery battery);
 
 	Car(int id, Battery battery, Location currLocation);
+
+
 	
 
 	//GETTERS

@@ -1,5 +1,6 @@
 CC=g++
-CFLAGS = -w -pg 
+CFLAGS = -Wall -pg 
+
 
 CLASSES_O = sim.o Event.o Scenario.o BaseScenario.o	Location.o Battery.o Distance.o Car.o Revenue.o PassengerRequestEvent.o PassengerServicedEvent.o CarBatteryRechargeEvent.o
 			
@@ -36,7 +37,7 @@ clean:
 	rm -f *.o
 	rm -f config.*.*
 	rm -f gmon.out 
-	rm -f ../log/*
+	rm -f ../simdumps/*
 	rm -f temp_*.cfg
 
 # Other Dependencies
