@@ -78,6 +78,11 @@ class Battery {
 	double dischargeBatteryByDistance(int metre);
 
 	/**
+	 * @param specify the distance to be travelled and return the amount of charge required to travel that distance
+	 */
+	double chargeRequiredByDistance(int metre);
+
+	/**
 	 * resets the battery level to 100% again and increments the rechargeCount
 	 */
 	void rechargeBattery();
