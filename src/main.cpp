@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 	// Initialize config parameters
 	config_init(argv[1]);
 
-	carTesting();
+	//carTesting();
 
 	// The scenario to execute. Will be instantiated depending on context
 	Scenario* scenario;
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
 		delete event;
 
 		// Update statistics for scenario
-		scenario->updateStatistics(time);
+		//scenario->updateStatistics(time);
 	}
 
 	std::cout<<"Event List Empty"<<std::endl;	
@@ -80,6 +80,7 @@ void carTesting(){
 	Car* c1 = new Car(i,b,l);
 	Car* c2 = new Car(i+1,b,l);
 
+	cout<<"----------------------"<<endl<<"TESTING CAR CLASS AND ITS VECTORS"<<endl<<"------------------------"<<endl;
 	cout<<"location l = (id,lat,long) = "<<l.id<<" "<<l.latitude<<" "<<l.longitude<<endl;
 	cout<<"b.current_rate = "<<b.getCurrentCharge()<<endl;
 	cout<<"b.depth_of_ischarge = "<<b.getDepthOfDischarge()<<endl;
@@ -90,26 +91,57 @@ void carTesting(){
 	cout<<"b.current_rate = "<<c1->battery.getCurrentCharge()<<endl;
 	cout<<"b.depth_of_ischarge = "<<c1->battery.getDepthOfDischarge()<<endl;
 	cout<<"b.inital_rechargeCount = "<<c1->battery.getRechargeCount()<<endl;
+	
+	cout<<"---Car "<<c2->getCarId()<<" ---"<<endl;
+	cout<<"location l = (id,lat,long) = "<<c2->currlocation.id<<" "<<c2->currlocation.latitude<<" "<<c2->currlocation.longitude<<endl;
+	cout<<"b.current_rate = "<<c2->battery.getCurrentCharge()<<endl;
+	cout<<"b.depth_of_ischarge = "<<c2->battery.getDepthOfDischarge()<<endl;
+	cout<<"b.inital_rechargeCount = "<<c2->battery.getRechargeCount()<<endl;
 
+	l.id = 3;
+	l.longitude = 4;
+	l.latitude = 3;
+
+
+	b.dischargeBatteryByDistance(100);
+	
+	cout<<endl<<" VALUES OF B AND L INITIALLLY CHANGED TO "<<endl<<endl;
+	cout<<"location l = (id,lat,long) = "<<l.id<<" "<<l.latitude<<" "<<l.longitude<<endl;
+	cout<<"b.current_rate = "<<b.getCurrentCharge()<<endl;
+	cout<<"b.depth_of_ischarge = "<<b.getDepthOfDischarge()<<endl;
+	cout<<"b.inital_rechargeCount = "<<b.getRechargeCount()<<endl;
+	
+	
+	cout<<endl<<" VALUES OF c1 and c2 are now: "<<endl<<endl;
+	cout<<"---Car "<<c1->getCarId()<<" ---"<<endl;
+	cout<<"location l = (id,lat,long) = "<<c1->currlocation.id<<" "<<c1->currlocation.latitude<<" "<<c1->currlocation.longitude<<endl;
+	cout<<"b.current_rate = "<<c1->battery.getCurrentCharge()<<endl;
+	cout<<"b.depth_of_ischarge = "<<c1->battery.getDepthOfDischarge()<<endl;
+	cout<<"b.inital_rechargeCount = "<<c1->battery.getRechargeCount()<<endl;
+	
+	cout<<"---Car "<<c2->getCarId()<<" ---"<<endl;
+	cout<<"location l = (id,lat,long) = "<<c2->currlocation.id<<" "<<c2->currlocation.latitude<<" "<<c2->currlocation.longitude<<endl;
+	cout<<"b.current_rate = "<<c2->battery.getCurrentCharge()<<endl;
+	cout<<"b.depth_of_ischarge = "<<c2->battery.getDepthOfDischarge()<<endl;
+
+	Battery b1(BATTERY_MAX_CHARGE, BATTERY_DEPTH_OF_DISCHARGE, BATTERY_DISCHARGE_PER_METRE);
+	
+	std::vector<Car> cars;
+	
+	for(int i = 1; i <=  NUMBER_OF_CARS; i++){
+
+		cars.push_back(i);
+
+	}
+
+	for(std::vector<Car>::iterator it = cars.begin(); it != cars.end(); ++it){
+
+			(*it).battery = b1;
+			(*it).battery.dischargeBatteryByDistance(2500);
+			cout<<"Car id: "<<(*it).getCarId()<<" and curr battery "<<(*it).battery.getCurrentCharge()<<endl;
+		}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void testing(){
 
