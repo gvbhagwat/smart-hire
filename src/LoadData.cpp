@@ -7,7 +7,7 @@
 int Distance[50][50],TimeToTravel[50][50];
 int carLocation[100];	//just for testing
 int passengerRequestCount,carCount,seedCarLocation,seedItinerary;
-int minWaitingTime,maxWaitingTime,numberOfStations;
+int minWaitingTime,maxWaitingTime,NMBER_OF_STATIONS;
 int simStartTime,simDuration,timeOfRequest;
 
 void loadDatabase();
@@ -26,7 +26,7 @@ void init()
 	seedItinerary=234;
 	minWaitingTime=120;		//in seconds
 	maxWaitingTime=1200;	//in seconds
-	numberOfStations=50;
+	NMBER_OF_STATIONS=50;
 	simStartTime=0;			//in seconds
 	simDuration=3600*5;		//in seconds
 	publishCars();
@@ -41,7 +41,7 @@ void publishCars()
 	srand(seedCarLocation);
 	for(i=0;i<carCount;i++)
 	{
-		LocationID=rand()%numberOfStations;
+		LocationID=rand()%NMBER_OF_STATIONS;
 		carLocation[i]=LocationID;	//temp. to be deleted later
 		//cout<<LocationID<<endl;
 		
@@ -56,8 +56,8 @@ void pushPassengerRequests(){
 	int i,source,destination,waitingTime;
 	srand(seedItinerary);
 	for (i=0;i<passengerRequestCount;i++){
-		source=rand()%numberOfStations;
-		destination=rand()%numberOfStations;
+		source=rand()%NMBER_OF_STATIONS;
+		destination=rand()%NMBER_OF_STATIONS;
 		waitingTime=rand()%(maxWaitingTime-minWaitingTime) + minWaitingTime;
 		timeOfRequest=rand()% simDuration+ simStartTime;
 		if(i==10){	//just to test, no other significance of this condition
@@ -85,9 +85,9 @@ void PassengerRequestEvent(int time_of_request,int source,int destination, int m
 		{
 			
 			/*
-			if (car.battery.getCharge()>car.battery.chargeRequired(Distance[carLocation[i]][source]+Distance[source][destination]) )
+			if (car.battery.getCharge()>car.battery.chargeRequiredByDistance(Distance[carLocation[i]][source]+Distance[source][destination]) )
 			{
-
+				objective1();
 			}
 			*/
 			cout<<i<<endl;
@@ -112,14 +112,8 @@ void PassengerRequestEvent(int time_of_request,int source,int destination, int m
 		*/
 		
 	}
-	cout<<"CoosenCar="<<choosenCar<<endl;
+	cout<<"ChoosenCar="<<choosenCar<<endl;
 	
-}
-int main()
-{
-	loadDatabase();
-	//  printDatabase();
-	init();
 }
 
 void loadDatabase()
@@ -141,7 +135,7 @@ void loadDatabase()
 			//convert String into an int
 			istringstream ( cell ) >> Distance[i][j];
 			j++;
-			if(j==numberOfStations)
+			if(j==NMBER_OF_STATIONS)
 			{
 				i++;
 				j=0;
@@ -161,7 +155,7 @@ void loadDatabase()
 			//convert String into an int
 			istringstream ( cell ) >> TimeToTravel[i][j];
 			j++;
-			if(j==numberOfStations)
+			if(j==NMBER_OF_STATIONS)
 			{
 				i++;
 				j=0;
@@ -183,18 +177,33 @@ void printDatabase()
 {
 	int i,j;
 	//Printing Time matrix
-	for(i=0;i<numberOfStations;i++)
+	for(i=0;i<NMBER_OF_STATIONS;i++)
 	{
-		for(j=0;j<numberOfStations;j++)
+		for(j=0;j<NMBER_OF_STATIONS;j++)
 		{
 			cout<<i<<","<<j<<"#"<<TimeToTravel[i][j]<<" ";
 		}
 		cout<<endl;
 	}
 	//Printing Station matrix
-	for(i=0;i<numberOfStations;i++)
+	for(i=0;i<NMBER_OF_STATIONS;i++)
 	{
 		cout<<Station[i]<<endl;
 	}
 
 }
+void writeToFile()
+{
+	ofstream myfile;
+	myfile.open ("example.txt");
+  	myfile << "Writing this to a file.\n";
+  	myfile.close();
+}
+int main()
+{
+	writeToFile();
+	loadDatabase();
+	//  printDatabase();
+	init();
+}
+
