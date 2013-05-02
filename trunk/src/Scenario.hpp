@@ -24,7 +24,7 @@ class Scenario
 		virtual ~Scenario() {};
 		
 		/* Update statistics, if necessary */
-		virtual void updateStatistics(double time) = 0;
+		virtual int updateStatistics(double time) = 0;
 
 };
 
