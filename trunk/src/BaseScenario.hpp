@@ -32,7 +32,7 @@ class BaseScenario: public Scenario{
 
 
 	// protected member functions
-	
+	void printHeader(ofstream& outputstream);
 	// Initialization
 	
 	int initializeDistanceMatrix();
