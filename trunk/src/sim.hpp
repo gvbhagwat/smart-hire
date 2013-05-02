@@ -20,13 +20,13 @@ extern "C" {
 #define SEED_ITINERARY		config_get_int("SEED_ITINERARY")
 
 /* Simulation time */
-#define SIM_DURATION 		config_get_double("SIM_DURATION")
-#define SIM_START 			config_get_double("SIM_START")
-#define SIM_END				config_get_double("SIM_END")
+#define SIM_DURATION 		config_get_int("SIM_DURATION")
+#define SIM_START 			config_get_int("SIM_START")
+#define SIM_END				config_get_int("SIM_END")
 
 /* Simulation Parameters CUSTOMER INFORMATION */
-#define MIN_WAITING_TIME						config_get_double("MIN_WAITING_TIME")
-#define MAX_WAITING_TIME						config_get_double("MAX_WAITING_TIME")
+#define MIN_WAITING_TIME						config_get_int("MIN_WAITING_TIME")
+#define MAX_WAITING_TIME						config_get_int("MAX_WAITING_TIME")
 #define PASSENGER_REQUEST_COUNT					config_get_int("PASSENGER_REQUEST_COUNT")
 #define NUMBER_OF_STATIONS						config_get_int("NUMBER_OF_STATIONS")
 

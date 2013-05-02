@@ -1,6 +1,12 @@
 #include "Battery.hpp"
 #include "sim.hpp"
 
+
+/**
+ * @brief 
+ *
+ * @return 
+ **/
 Battery::Battery(){
 
 	charge =BATTERY_MAX_CHARGE;
@@ -10,6 +16,13 @@ Battery::Battery(){
 	rechargeCount = 1;
 }
 
+/**
+ * @brief 
+ *
+ * @param other 
+ *
+ * @return 
+ **/
 Battery::Battery( const Battery& other):
 		charge(other.charge), depthOfDischarge(other.depthOfDischarge),
 		dischargePerMetre(other.dischargePerMetre), rechargeCount(other.rechargeCount){
@@ -44,6 +57,11 @@ double Battery::getDepthOfDischarge(){
 	return depthOfDischarge;
 }
 
+/**
+ * @brief 
+ *
+ * @return 
+ **/
 double Battery::getDischargePerMetre(){
 	return dischargePerMetre;
 }
