@@ -59,7 +59,7 @@ class BaseScenario: public Scenario{
 	int leastTimeMatrix[50][50];
 
 	std::vector<Location> stations;
-	std::vector<Car> cars;
+	std::vector<Car*> cars;
 	
 	EventList& getEventList();
 
