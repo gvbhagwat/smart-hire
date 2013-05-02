@@ -45,7 +45,7 @@ extern "C" {
 /* Simulation Resources */
 #define DISTANCE_MATRIX_RESOURCE_FILE 			config_get_string("DISTANCE_MATRIX_RESOURCE_FILE")
 #define TIME_MATRIX_RESOURCE_FILE 				config_get_string("TIME_MATRIX_RESOURCE_FILE")
-#define STATION_COORDINATES_RESOURCE_FILE 		config_get_string("STATIONS_COORDINATES_RESOURCE_FILE")
+#define STATION_COORDINATES_RESOURCE_FILE 		config_get_string("STATION_COORDINATES_RESOURCE_FILE")
 
 /* Simulation Output Dumps */
 #define CARS_BATTERY_POWER_DAT_FILE 			config_get_string("CARS_BATTERY_POWER_DAT_FILE")
