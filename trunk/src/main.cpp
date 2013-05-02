@@ -25,7 +25,7 @@ int main(int argc, char** argv)
 	//carTesting();
 
 	// The scenario to execute. Will be instantiated depending on context
-	Scenario* scenario;
+	BaseScenario* scenario;
 
 	// The event list for the simulator
 	EventList eventList;
@@ -50,14 +50,16 @@ int main(int argc, char** argv)
 	// Main simulation loop
 	while( !eventList.empty() && time < SIM_DURATION )
 	{
-		std::cout<<"Event List not Empty"<<std::endl;	
+		//std::cout<<"Event List not Empty"<<std::endl;	
 
 		// Get next event (with smallest timestamp)
 		Event* event = eventList.top();
+
 		eventList.pop();
 		
 		// Set current time to time of event
 		time = event->getTime();
+		cout<<"Event time : "<<time<<endl;
 
 		// Handle the event
 		event->handle(eventList);
@@ -69,7 +71,7 @@ int main(int argc, char** argv)
 		//scenario->updateStatistics(time);
 	}
 
-	std::cout<<"Event List Empty"<<std::endl;	
+	//std::cout<<"Event List Empty"<<std::endl;	
 		
 
 	// Kill the scenario
