@@ -2,6 +2,7 @@
 #define BASESCENARIO_HPP
 
 #include "Scenario.hpp"
+#include "sim.hpp"
 #include "Car.hpp"
 #include <vector>
 #include <string>
@@ -19,10 +20,16 @@ class BaseScenario: public Scenario{
 	double seedCarLocation;
 	double seedItinerary;
 
-	ofstream carRevenueDump;
-	ofstream carBatteryDump;
-	ofstream carDistanceDump;
-	ofstream locationDump;
+	ofstream batteryPowerStats,
+		batteryRechargeCountStats,
+		revenewEarningStats,
+		revenewLossesStats,
+		revenewTotalStats,
+		distanceEarningStats,
+		distanceLossesStats,
+		distanceTotalStats,
+		servicePerLocationStats;
+
 
 	// protected member functions
 	
@@ -47,7 +54,7 @@ class BaseScenario: public Scenario{
 
 	public:
 	
-	int printShortestDistancematrix();
+	void printShortestDistancematrix();
 	int shortestDistanceMatrix[50][50];
 	int leastTimeMatrix[50][50];
 

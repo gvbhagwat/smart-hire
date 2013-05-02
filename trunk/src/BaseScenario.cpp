@@ -10,12 +10,55 @@ BaseScenario::BaseScenario(EventList& eventList, int _cars, int _cust, double se
 		Scenario(eventList), nCars(_cars), nCustomerRequests(_cust), seedCarLocation(seedCar), seedItinerary(seedIti){
 
 	// open all the simulation dump dat files
+/*
+CARS_BATTERY_POWER_DAT_FILE  		= "../simdumps/carsBatteryPower.dat"
+CARS_BATTERY_RECHARGE_COUNT_FILE  	= "../simdumps/carsBatteryRechargeCount.dat"
+
+CARS_REVENUE_EARNINGS_DAT_FILE 		= "../simdumps/carsRevenueEarnings.dat"
+CARS_REVENUE_LOSSES_DAT_FILE 		= "../simdumps/carsRevenueLosses.dat"
+CARS_REVENUE_TOTAL_DAT_FILE 		= "../simdumps/carsRevenueTotal.dat"
+
+CARS_DISTANCE_EARNINGS_DAT_FILE 	= "../simdumps/carsDistanceEarnings.dat"
+CARS_DISTANCE_LOSSES_DAT_FILE 		= "../simdumps/carsDistanceLosses.dat"
+CARS_DISTANCE_TOTAL_DAT_FILE 		= "../simdumps/carsDistanceTotal.dat"
+
+SERVICE_PER_LOCATION_STATS_FILE 	= "../simdumps/servicePerLocation.dat"
+
+*/
+
+	batteryPowerStats.open(CARS_BATTERY_POWER_DAT_FILE);
+	batteryRechargeCountStats.open(CARS_BATTERY_RECHARGE_COUNT_FILE);
+	revenewEarningStats.open (CARS_REVENUE_EARNINGS_DAT_FILE);
+	revenewLossesStats.open (CARS_REVENUE_LOSSES_DAT_FILE);
+	revenewTotalStats.open (CARS_REVENUE_TOTAL_DAT_FILE);
+	distanceEarningStats.open (CARS_DISTANCE_EARNINGS_DAT_FILE);
+	distanceLossesStats.open (CARS_DISTANCE_LOSSES_DAT_FILE);
+	distanceTotalStats.open (CARS_DISTANCE_TOTAL_DAT_FILE);
+	servicePerLocationStats.open (SERVICE_PER_LOCATION_STATS_FILE);
+
+	batteryPowerStats<< "Gondi loves honey, flirts with subhasmita\n";
+	batteryRechargeCountStats<< "Gondi loves honey, flirts with subhasmita\n";
+	revenewEarningStats<< "Gondi loves honey, flirts with subhasmita\n";
+	revenewLossesStats<< "Gondi loves honey, flirts with subhasmita\n";
+	revenewTotalStats<< "Gondi loves honey, flirts with subhasmita\n";
+	distanceEarningStats<< "Gondi loves honey, flirts with subhasmita\n";
+	distanceLossesStats<< "Gondi loves honey, flirts with subhasmita\n";
+	distanceTotalStats<< "Gondi loves honey, flirts with subhasmita\n";
+	servicePerLocationStats<< "Gondi loves honey, flirts with subhasmita\n";
 }
 
 BaseScenario::~BaseScenario(){
 
 	// close all the dat files
-
+	batteryPowerStats.close();
+	batteryRechargeCountStats.close();
+	revenewEarningStats.close();
+	revenewLossesStats.close();
+	revenewTotalStats.close();
+	distanceEarningStats.close();
+	distanceLossesStats.close();
+	distanceTotalStats.close();
+	servicePerLocationStats.close();
 	// destroy the event List	
 }
 
@@ -132,7 +175,7 @@ int BaseScenario::updateStatistics(double time){
 
 // auxillary testing functions
 
-int BaseScenario::printShortestDistancematrix(){
+void BaseScenario::printShortestDistancematrix(){
 	for(int i = 0; i < 50; i++)
 		for(int j = 0; j < 50; j++){
 			cout<<i<<","<<j<<"#"<<shortestDistanceMatrix[i][j]<<endl;

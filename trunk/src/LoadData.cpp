@@ -7,7 +7,7 @@
 int Distance[50][50],TimeToTravel[50][50];
 int carLocation[100];	//just for testing
 int passengerRequestCount,carCount,seedCarLocation,seedItinerary;
-int minWaitingTime,maxWaitingTime,NMBER_OF_STATIONS;
+int minWaitingTime,maxWaitingTime,NUMBER_OF_STATIONS;
 int simStartTime,simDuration,timeOfRequest;
 
 void loadDatabase();
@@ -26,7 +26,7 @@ void init()
 	seedItinerary=234;
 	minWaitingTime=120;		//in seconds
 	maxWaitingTime=1200;	//in seconds
-	NMBER_OF_STATIONS=50;
+	NUMBER_OF_STATIONS=50;
 	simStartTime=0;			//in seconds
 	simDuration=3600*5;		//in seconds
 	publishCars();
@@ -41,7 +41,7 @@ void publishCars()
 	srand(seedCarLocation);
 	for(i=0;i<carCount;i++)
 	{
-		LocationID=rand()%NMBER_OF_STATIONS;
+		LocationID=rand()%NUMBER_OF_STATIONS;
 		carLocation[i]=LocationID;	//temp. to be deleted later
 		//cout<<LocationID<<endl;
 		
@@ -56,8 +56,8 @@ void pushPassengerRequests(){
 	int i,source,destination,waitingTime;
 	srand(seedItinerary);
 	for (i=0;i<passengerRequestCount;i++){
-		source=rand()%NMBER_OF_STATIONS;
-		destination=rand()%NMBER_OF_STATIONS;
+		source=rand()%NUMBER_OF_STATIONS;
+		destination=rand()%NUMBER_OF_STATIONS;
 		waitingTime=rand()%(maxWaitingTime-minWaitingTime) + minWaitingTime;
 		timeOfRequest=rand()% simDuration+ simStartTime;
 		if(i==10){	//just to test, no other significance of this condition
@@ -135,7 +135,7 @@ void loadDatabase()
 			//convert String into an int
 			istringstream ( cell ) >> Distance[i][j];
 			j++;
-			if(j==NMBER_OF_STATIONS)
+			if(j==NUMBER_OF_STATIONS)
 			{
 				i++;
 				j=0;
@@ -155,7 +155,7 @@ void loadDatabase()
 			//convert String into an int
 			istringstream ( cell ) >> TimeToTravel[i][j];
 			j++;
-			if(j==NMBER_OF_STATIONS)
+			if(j==NUMBER_OF_STATIONS)
 			{
 				i++;
 				j=0;
@@ -177,16 +177,16 @@ void printDatabase()
 {
 	int i,j;
 	//Printing Time matrix
-	for(i=0;i<NMBER_OF_STATIONS;i++)
+	for(i=0;i<NUMBER_OF_STATIONS;i++)
 	{
-		for(j=0;j<NMBER_OF_STATIONS;j++)
+		for(j=0;j<NUMBER_OF_STATIONS;j++)
 		{
 			cout<<i<<","<<j<<"#"<<TimeToTravel[i][j]<<" ";
 		}
 		cout<<endl;
 	}
 	//Printing Station matrix
-	for(i=0;i<NMBER_OF_STATIONS;i++)
+	for(i=0;i<NUMBER_OF_STATIONS;i++)
 	{
 		cout<<Station[i]<<endl;
 	}
