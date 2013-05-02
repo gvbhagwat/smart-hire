@@ -6,8 +6,8 @@
 #include "sim.hpp"
 using namespace std;
 
-BaseScenario::BaseScenario(EventList& eventList, int _cars, int _cust):
-		Scenario(eventList), nCars(_cars), nCustomerRequests(_cust){
+BaseScenario::BaseScenario(EventList& eventList, int _cars, int _cust, double seedCar, double seedIti):
+		Scenario(eventList), nCars(_cars), nCustomerRequests(_cust), seedCarLocation(seedCar), seedItinerary(seedIti){
 
 	// open all the simulation dump dat files
 }
@@ -23,7 +23,7 @@ BaseScenario::~BaseScenario(){
 
 int BaseScenario::initializeDistanceMatrix(){
 	
-	int i,j;
+	int i= 0,j =0;
 	string line;
 
 	// define the ifstream object
@@ -47,10 +47,10 @@ int BaseScenario::initializeDistanceMatrix(){
 				}
 			}
 
-		 distanceData.close();
 		}
 	}
 
+	distanceData.close();
 	return 0;
 }
 
@@ -72,7 +72,7 @@ int BaseScenario::initializeEvents(double seedItinerary){
 
 //public function
 
-int BaseScenario::initializeSimulation(double seedLocation, double seedCarItinerary){
+int BaseScenario::initializeScenario(){
 
 	int status = 0;
 
@@ -82,9 +82,9 @@ int BaseScenario::initializeSimulation(double seedLocation, double seedCarItiner
 
 	status += initializeTimeMatrix();
 
-	status += initializeCars(seedLocation);
+	status += initializeCars(seedCarLocation);
 
-	status += initializeEvents(seedCarItinerary);
+	status += initializeEvents(seedItinerary);
 
 	return status;
 }
@@ -128,4 +128,13 @@ int BaseScenario::updateStatistics(double time){
 	status += updateServicePerLocationStats(time);
 
 	return status;
+}
+
+// auxillary testing functions
+
+int BaseScenario::printShortestDistancematrix(){
+	for(int i = 0; i < 50; i++)
+		for(int j = 0; j < 50; j++){
+			cout<<i<<","<<j<<"#"<<shortestDistanceMatrix[i][j]<<endl;
+		}
 }
