@@ -99,10 +99,12 @@ int BaseScenario::initializeDistanceMatrix(){
 			}
 
 		}
+	
+	  distanceData.close();
 	}
+	else return 0;
 
-	distanceData.close();
-	return 0;
+	return 1;
 }
 
 int BaseScenario::initializeTimeMatrix(){
