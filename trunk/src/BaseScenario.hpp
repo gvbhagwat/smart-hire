@@ -47,8 +47,8 @@ class BaseScenario: public Scenario{
 
 	public:
 	
-	int** shortestDistanceMatrix;
-	int** leastTimeMatrix;
+	int shortestDistanceMatrix[NUMBER_OF_STATIONS][NUMBER_OF_STATIONS];
+	int leastTimeMatrix[NUMBER_OF_STATIONS][NUMBER_OF_STATIONS];
 	std::vector<Location> stations;
 	std::vector<Car> cars;
 
