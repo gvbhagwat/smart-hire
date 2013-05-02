@@ -5,6 +5,8 @@
 #include <fstream>
 #include <cstdlib>
 #include "sim.hpp"
+#include "PassengerRequestEvent.hpp"
+
 using namespace std;
 
 
@@ -233,7 +235,7 @@ int BaseScenario::initializeCars(double seedLocation) {
  */
 int BaseScenario::initializeEvents(double seedItinerary) {
 
-    int sourceLocation, destinationLocation, waitingTime; //waiting time in seconds
+    int sourceLocationId, destinationLocationId, waitingTime; //waiting time in seconds
     int timeofRequests;
     int nStations = (int)this->stations.size();
 
@@ -242,12 +244,20 @@ int BaseScenario::initializeEvents(double seedItinerary) {
 
     for(int i = 0; i < this->nCustomerRequests; i++) {
 
-        sourceLocation = rand() % nStations;
-        destinationLocation = rand() % nStations;
+        sourceLocationId = rand() % nStations;
+		Location source(sourceLocationId, stations[sourceLocationId].name);
+
+        destinationLocationId = rand() % nStations;
+		Location dest(destinationLocationId, stations[destinationLocationId].name);
+
         waitingTime = rand() % (MAX_WAITING_TIME - MIN_WAITING_TIME) + MIN_WAITING_TIME;
         timeofRequests = (rand() % (SIM_DURATION)) + SIM_START;
 
-        cout<<"Request generated at time : "<<timeofRequests<<" from source = "<<sourceLocation<<" to destination = "<<destinationLocation<<" wait = "<<waitingTime<<endl;
+		//cout<<"Request generated at time : "<<timeofRequests<<" from source = "<<
+		//sourceLocationId<<" to destination = "<<destinationLocationId<<" wait = "<<waitingTime<<endl;
+
+		getEventList().push(new PassengerRequestEvent(timeofRequests,*this,source,dest,waitingTime));
+
 
     }
 

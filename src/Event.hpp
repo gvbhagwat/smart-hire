@@ -24,14 +24,14 @@ class Event {
 	
 	protected:
 		/* Time-stamp of the event's occurence */
-		double time;
+		int time;
 
 	public:
 		/* Create a new event with given timestamp */
-		Event(double time) : time(time) {}
+		Event(int time) : time(time) {}
 
 		/* Returns the time-stamp of the event */
-		const double getTime() { return time; }
+		const int getTime() { return time; }
 
 		/* Handle this event */
 		virtual void handle(EventList& eventList) = 0;
