@@ -7,10 +7,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <boost/numeric/ublas/matrix.hpp>
 
 using namespace std;
-using namespace boost::numeric::ublas;
 
 class BaseScenario: public Scenario{
 
@@ -23,12 +21,6 @@ class BaseScenario: public Scenario{
 	int nCars;
 	int nCustomerRequests;
 
-	matrix<int> shortestDistanceMatrix;
-	matrix<int> leastTimeMatrix;
-	std::vector<Location> stations;
-	std::vector<Car> cars;
-
-
 	ofstream carRevenueDump;
 	ofstream carBatteryDump;
 	ofstream carDistanceDump;
@@ -38,36 +30,37 @@ class BaseScenario: public Scenario{
 	
 	// Initialization
 	
-	bool initializeDistanceMatrix();
-	bool initializeTimeMatrix();
-	bool initializeStationVector();
+	int initializeDistanceMatrix();
+	int initializeTimeMatrix();
+	int initializeStationVector();
 
-	bool initializeCars();
-	bool initializeEvents();
+	int initializeCars(double seed);
+	int initializeEvents(double seed);
 
 	// Update Stats
 	
-	bool updateCarBatteryStats(double time);
-	bool updateCarRevenueStats(double time);
-	bool updateCarDistanceStats(double time);
+	int updateCarBatteryStats(double time);
+	int updateCarRevenueStats(double time);
+	int updateCarDistanceStats(double time);
 
-	bool updateServicePerLocationStats(double time);
+	int updateServicePerLocationStats(double time);
 
 	public:
+	
+	int** shortestDistanceMatrix;
+	int** leastTimeMatrix;
+	std::vector<Location> stations;
+	std::vector<Car> cars;
 
 	BaseScenario(EventList& eventList, string distanceResourceFile, string timeResourceFile, string stationVectorResourceFile, int nCars, int CustomerReuqests);
 
 	~BaseScenario();
 
-	bool initializeSimulation(double seedCarLocation, double seedCarItinerary);
+	int initializeSimulation(double seedCarLocation, double seedCarItinerary);
 
 	EventList& getEventList();
-	matrix<int>& getShortestDistanceMatrix();
-	matrix<int>& getLeastTimeMatrix();
-	std::vector<Car>& getCars();
-	std::vector<Location>& getStations();
 
-	void updateStatistics(double time); 
+	int updateStatistics(double time); 
 
 };
 
