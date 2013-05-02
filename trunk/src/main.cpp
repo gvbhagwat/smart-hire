@@ -37,7 +37,12 @@ int main(int argc, char** argv)
 	seedRandomizer();
 
 	// For now, the scenario is TCP
-	//scenario = new TcpScenario(eventList, FTP);
+	scenario = new BaseScenario(eventList, 
+								DISTANCE_MATRIX_RESOURCE_FILE, 
+								TIME_MATRIX_RESOURCE_FILE, 
+								STATION_COORDINATES_RESOURCE_FILE,
+							    NUMBER_OF_CARS,
+								PASSENGER_REQUEST_COUNT);
 
 	// Main simulation loop
 	while( !eventList.empty() && time < SIM_DURATION )
