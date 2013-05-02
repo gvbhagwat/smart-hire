@@ -14,10 +14,6 @@ class BaseScenario: public Scenario{
 
 	protected:
 
-	string distanceMatrixResourceFile;
-	string timeMatrixResourceFile;
-	string stationVectorResourceFile;
-
 	int nCars;
 	int nCustomerRequests;
 
@@ -53,7 +49,7 @@ class BaseScenario: public Scenario{
 	std::vector<Location> stations;
 	std::vector<Car> cars;
 
-	BaseScenario(EventList& eventList, string distanceResourceFile, string timeResourceFile, string stationVectorResourceFile, int nCars, int CustomerReuqests);
+	BaseScenario(EventList& eventList, int nCars, int CustomerReuqests);
 
 	~BaseScenario();
 
