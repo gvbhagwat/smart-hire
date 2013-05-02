@@ -23,6 +23,9 @@ class Scenario
 		/* Virtual descructor so that child classes can perform finishing */
 		virtual ~Scenario() {};
 		
+		/* virtual function to initialize the scenario */
+		virtual int initializeScenario() = 0;
+
 		/* Update statistics, if necessary */
 		virtual int updateStatistics(double time) = 0;
 

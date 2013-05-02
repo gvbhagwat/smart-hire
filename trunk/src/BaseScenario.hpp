@@ -16,6 +16,8 @@ class BaseScenario: public Scenario{
 
 	int nCars;
 	int nCustomerRequests;
+	double seedCarLocation;
+	double seedItinerary;
 
 	ofstream carRevenueDump;
 	ofstream carBatteryDump;
@@ -41,22 +43,24 @@ class BaseScenario: public Scenario{
 
 	int updateServicePerLocationStats(double time);
 
+
+
 	public:
 	
+	int printShortestDistancematrix();
 	int shortestDistanceMatrix[50][50];
 	int leastTimeMatrix[50][50];
 
 	std::vector<Location> stations;
 	std::vector<Car> cars;
-
-	BaseScenario(EventList& eventList, int nCars, int CustomerReuqests);
-
-	~BaseScenario();
-
-	int initializeSimulation(double seedCarLocation, double seedCarItinerary);
-
+	
 	EventList& getEventList();
 
+	// From the base class
+
+	BaseScenario(EventList& eventList, int nCars, int CustomerReuqests, double seedCarLocation, double seedItinerary);
+	~BaseScenario();
+	int initializeScenario();
 	int updateStatistics(double time); 
 
 };

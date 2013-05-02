@@ -37,9 +37,15 @@ int main(int argc, char** argv)
 	seedRandomizer();
 
 	// For now, the scenario is TCP
-	scenario = new BaseScenario(eventList, 
+	scenario = new BaseScenario(eventList,
 							    NUMBER_OF_CARS,
-								PASSENGER_REQUEST_COUNT);
+								PASSENGER_REQUEST_COUNT,
+								SEED_CAR_LOCATION,
+								SEED_ITINERARY);
+
+	scenario->initializeScenario();
+
+	((BaseScenario*)scenario)->printShortestDistancematrix();
 
 	// Main simulation loop
 	while( !eventList.empty() && time < SIM_DURATION )
