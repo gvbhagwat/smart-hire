@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <cstdlib>
 #include "sim.hpp"
 using namespace std;
 
@@ -10,26 +11,10 @@ BaseScenario::BaseScenario(EventList& eventList, int _cars, int _cust, double se
 		Scenario(eventList), nCars(_cars), nCustomerRequests(_cust), seedCarLocation(seedCar), seedItinerary(seedIti){
 
 	// open all the simulation dump dat files
-/*
-CARS_BATTERY_POWER_DAT_FILE  		= "../simdumps/carsBatteryPower.dat"
-CARS_BATTERY_RECHARGE_COUNT_FILE  	= "../simdumps/carsBatteryRechargeCount.dat"
-
-CARS_REVENUE_EARNINGS_DAT_FILE 		= "../simdumps/carsRevenueEarnings.dat"
-CARS_REVENUE_LOSSES_DAT_FILE 		= "../simdumps/carsRevenueLosses.dat"
-CARS_REVENUE_TOTAL_DAT_FILE 		= "../simdumps/carsRevenueTotal.dat"
-
-CARS_DISTANCE_EARNINGS_DAT_FILE 	= "../simdumps/carsDistanceEarnings.dat"
-CARS_DISTANCE_LOSSES_DAT_FILE 		= "../simdumps/carsDistanceLosses.dat"
-CARS_DISTANCE_TOTAL_DAT_FILE 		= "../simdumps/carsDistanceTotal.dat"
-
-SERVICE_PER_LOCATION_STATS_FILE 	= "../simdumps/servicePerLocation.dat"
-
-*/
-
+	revenewLossesStats.open (CARS_REVENUE_LOSSES_DAT_FILE);
 	batteryPowerStats.open(CARS_BATTERY_POWER_DAT_FILE);
 	batteryRechargeCountStats.open(CARS_BATTERY_RECHARGE_COUNT_FILE);
 	revenewEarningStats.open (CARS_REVENUE_EARNINGS_DAT_FILE);
-	revenewLossesStats.open (CARS_REVENUE_LOSSES_DAT_FILE);
 	revenewTotalStats.open (CARS_REVENUE_TOTAL_DAT_FILE);
 	distanceEarningStats.open (CARS_DISTANCE_EARNINGS_DAT_FILE);
 	distanceLossesStats.open (CARS_DISTANCE_LOSSES_DAT_FILE);
@@ -47,14 +32,7 @@ SERVICE_PER_LOCATION_STATS_FILE 	= "../simdumps/servicePerLocation.dat"
 	printHeader(distanceTotalStats);
 	printHeader(servicePerLocationStats);
 }
-void BaseScenario::printHeader(ofstream& outputstream){
-//Will print the header row in dumps.
-	outputstream<<"Time\t";
-	for(int i=0;i<50;i++){
-		outputstream<<"car_"<<i<<"\t";
-	}
-	outputstream<<"\n";
-}
+
 BaseScenario::~BaseScenario(){
 
 	// close all the dat files
@@ -71,6 +49,15 @@ BaseScenario::~BaseScenario(){
 }
 
 // protected functions
+
+void BaseScenario::printHeader(ofstream& outputstream){
+//Will print the header row in dumps.
+	outputstream<<"Time\t";
+	for(int i=0;i<50;i++){
+		outputstream<<"car_"<<i<<"\t";
+	}
+	outputstream<<"\n";
+}
 
 int BaseScenario::initializeDistanceMatrix(){
 	
@@ -108,7 +95,37 @@ int BaseScenario::initializeDistanceMatrix(){
 }
 
 int BaseScenario::initializeTimeMatrix(){
-		return 0;
+	
+	int i= 0,j =0;
+	string line;
+
+	// define the ifstream object
+	ifstream timeData(TIME_MATRIX_RESOURCE_FILE);
+	
+	if(timeData.is_open()){
+					
+		while(std::getline(timeData,line)){
+			
+			stringstream lineStream(line);
+			string cell;
+
+			while(getline(lineStream, cell, ',')){
+
+				//convert string into and int
+				istringstream (cell) >> leastTimeMatrix[i][j];
+				j++;
+			
+					if(j == NUMBER_OF_STATIONS){
+						i++; j=0;
+				}
+			}
+
+		}
+	}
+
+	timeData.close();
+
+	return 0;
 }
 
 int BaseScenario::initializeStationVector(){
@@ -116,6 +133,19 @@ int BaseScenario::initializeStationVector(){
 }
 
 int BaseScenario::initializeCars(double seedLocation){
+	int i,locationId;
+	Battery initialBattery;
+
+	//srand is library function to define the seed
+	srand(seedCarLocation);
+
+	for(i=0;i<nCars;i++)
+	{
+	   locationId = rand()%NUMBER_OF_STATIONS;
+	   Location initialLocation(i);
+	   cars.push_back(new Car(i,initialBattery,initialLocation));	
+		
+	}
 	return 0;
 }
 
@@ -188,6 +218,6 @@ int BaseScenario::updateStatistics(double time){
 void BaseScenario::printShortestDistancematrix(){
 	for(int i = 0; i < 50; i++)
 		for(int j = 0; j < 50; j++){
-			cout<<i<<","<<j<<"#"<<shortestDistanceMatrix[i][j]<<endl;
+			cout<<i<<","<<j<<"#"<<shortestDistanceMatrix[i][j]<<" "<<leastTimeMatrix[i][j]<<endl;
 		}
 }
