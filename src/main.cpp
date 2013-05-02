@@ -45,7 +45,7 @@ int main(int argc, char** argv)
 
 	scenario->initializeScenario();
 
-	((BaseScenario*)scenario)->printShortestDistancematrix();
+	//((BaseScenario*)scenario)->printShortestDistancematrix();
 
 	// Main simulation loop
 	while( !eventList.empty() && time < SIM_DURATION )
