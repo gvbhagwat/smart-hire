@@ -36,17 +36,25 @@ SERVICE_PER_LOCATION_STATS_FILE 	= "../simdumps/servicePerLocation.dat"
 	distanceTotalStats.open (CARS_DISTANCE_TOTAL_DAT_FILE);
 	servicePerLocationStats.open (SERVICE_PER_LOCATION_STATS_FILE);
 
-	batteryPowerStats<< "Gondi loves honey, flirts with subhasmita\n";
-	batteryRechargeCountStats<< "Gondi loves honey, flirts with subhasmita\n";
-	revenewEarningStats<< "Gondi loves honey, flirts with subhasmita\n";
-	revenewLossesStats<< "Gondi loves honey, flirts with subhasmita\n";
-	revenewTotalStats<< "Gondi loves honey, flirts with subhasmita\n";
-	distanceEarningStats<< "Gondi loves honey, flirts with subhasmita\n";
-	distanceLossesStats<< "Gondi loves honey, flirts with subhasmita\n";
-	distanceTotalStats<< "Gondi loves honey, flirts with subhasmita\n";
-	servicePerLocationStats<< "Gondi loves honey, flirts with subhasmita\n";
+	printHeader(batteryPowerStats);
+	
+	printHeader(batteryRechargeCountStats);
+	printHeader(revenewEarningStats);
+	printHeader(revenewLossesStats);
+	printHeader(revenewTotalStats);
+	printHeader(distanceEarningStats);
+	printHeader(distanceLossesStats);
+	printHeader(distanceTotalStats);
+	printHeader(servicePerLocationStats);
 }
-
+void BaseScenario::printHeader(ofstream& outputstream){
+//Will print the header row in dumps.
+	outputstream<<"Time\t";
+	for(int i=0;i<50;i++){
+		outputstream<<"car_"<<i<<"\t";
+	}
+	outputstream<<"\n";
+}
 BaseScenario::~BaseScenario(){
 
 	// close all the dat files
