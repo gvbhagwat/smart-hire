@@ -28,6 +28,7 @@ extern "C" {
 #define MIN_WAITING_TIME						config_get_double("MIN_WAITING_TIME")
 #define MAX_WAITING_TIME						config_get_double("MAX_WAITING_TIME")
 #define PASSENGER_REQUEST_COUNT					config_get_int("PASSENGER_REQUEST_COUNT")
+#define NUMBER_OF_STATIONS						config_get_int("NUMBER_OF_STATIONS")
 
 /* Simulation Parameters CAR INFORMATION*/
 #define NUMBER_OF_CARS							config_get_int("NUMBER_OF_CARS")
