@@ -1,9 +1,13 @@
 #include "BaseScenario.hpp"
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include "sim.hpp"
 using namespace std;
 
-BaseScenario::BaseScenario(EventList& eventList, string dFile, string tFile, string sFile, int _cars, int _cust):
-		Scenario(eventList), distanceMatrixResourceFile(dFile), timeMatrixResourceFile(tFile), nCars(_cars), nCustomerRequests(_cust){
+BaseScenario::BaseScenario(EventList& eventList, int _cars, int _cust):
+		Scenario(eventList), nCars(_cars), nCustomerRequests(_cust){
 
 	// open all the simulation dump dat files
 }
@@ -18,6 +22,35 @@ BaseScenario::~BaseScenario(){
 // protected functions
 
 int BaseScenario::initializeDistanceMatrix(){
+	
+	int i,j;
+	string line;
+
+	// define the ifstream object
+	ifstream distanceData(DISTANCE_MATRIX_RESOURCE_FILE);
+	
+	if(distanceData.is_open()){
+					
+		while(std::getline(distanceData,line)){
+			
+			stringstream lineStream(line);
+			string cell;
+
+			while(getline(lineStream, cell, ',')){
+
+				//convert string into and int
+				istringstream (cell) >> shortestDistanceMatrix[i][j];
+				j++;
+			
+					if(j == NUMBER_OF_STATIONS){
+						i++; j=0;
+				}
+			}
+
+		 distanceData.close();
+		}
+	}
+
 	return 0;
 }
 
