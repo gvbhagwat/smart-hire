@@ -8,7 +8,7 @@ set output "nCarVariation.eps"
       unset label                            # remove any previous labels
       set xtic auto                          # set xtics automatically
       set ytic auto                          # set ytics automatically
-      set title "Service @ Battery discharge rate=0.001% per meter"
+      set title "Service With Varying Battery Discharge Rates(% per meter)"
       set xlabel "Number Of cars"
       set ylabel "Number Of passenger requests"
       #set key 0.01,130
