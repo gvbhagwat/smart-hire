@@ -73,7 +73,7 @@ BaseScenario::~BaseScenario() {
  */
 void BaseScenario::printHeader(ofstream& outputstream) {
 
-    outputstream<<"Time\t";
+    outputstream<<"#Time\t";
     for (int i=0; i<50; i++) {
         outputstream<<"car_"<<i<<"\t";
     }
@@ -318,6 +318,14 @@ EventList& BaseScenario::getEventList() {
  * @return
  */
 int BaseScenario::updateCarBatteryStats(double time) {
+
+	batteryPowerStats<<time<<"\t";
+	for( int i=0 ; i < (int)this->cars.size(); i++){
+
+		batteryPowerStats<<this->cars[i]->battery.getCurrentCharge()<<"\t";
+		
+	}
+	batteryPowerStats<<endl;
     return 0;
 }
 
