@@ -1,6 +1,6 @@
 reset
   set term postscript eps enhanced color
-set output "nCarVariation.eps"      
+set output "../plots/nCarVariation.eps"      
 	# Gnuplot script file for plotting data in file "Day1.dat"
       # This file is called   plot.p
       set   autoscale                        # scale axes automatically
@@ -10,7 +10,7 @@ set output "nCarVariation.eps"
       set ytic auto                          # set ytics automatically
       set title "Service With Varying Battery Discharge Rates(% per meter)"
       set xlabel "Number Of cars"
-      set ylabel "Number Of passenger requests"
+      set ylabel "Number Of passenger requests satisfied out of 2000"
       #set key 0.01,130
      # set label "MAPE (Base) = 8.0522048667" at 13,19
 	#set label "MAPE  = 6.9982" at 5,15
