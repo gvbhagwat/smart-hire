@@ -60,7 +60,7 @@ int main(int argc, char** argv)
 		// Set current time to time of event
 		time = event->getTime()	;
 
-		cout<<"time is "<<time<<endl;
+		//cout<<"time is "<<time<<endl;
 
 		// Handle the event
 		event->handle(eventList);

@@ -80,8 +80,8 @@ void BaseScenario::printHeader(ofstream& outputstream) {
     outputstream<<"\n";
 }
 
-void BaseScenario::printHeaderServicePerLocation(ofstream& outputstream){
-	outputstream<<"Time\t"<<"sourceId\t"<<"destId\t"<<"waitTime\t"<<"result"<<endl;
+void BaseScenario::printHeaderServicePerLocation(ofstream& outputstream) {
+    outputstream<<"Time\t"<<"sourceId\t"<<"destId\t"<<"waitTime\t"<<"result"<<endl;
 }
 /**
  * @brief
@@ -319,13 +319,13 @@ EventList& BaseScenario::getEventList() {
  */
 int BaseScenario::updateCarBatteryStats(double time) {
 
-	batteryPowerStats<<time<<"\t";
-	for( int i=0 ; i < (int)this->cars.size(); i++){
+    batteryPowerStats<<time<<"\t";
+    for ( int i=0 ; i < (int)this->cars.size(); i++) {
 
-		batteryPowerStats<<this->cars[i]->battery.getCurrentCharge()<<"\t";
-		
-	}
-	batteryPowerStats<<endl;
+        batteryPowerStats<<this->cars[i]->battery.getCurrentCharge()<<"\t";
+
+    }
+    batteryPowerStats<<endl;
     return 0;
 }
 
@@ -338,6 +338,20 @@ int BaseScenario::updateCarBatteryStats(double time) {
  * @return
  */
 int BaseScenario::updateCarRevenueStats(double time) {
+
+    revenewLossesStats<<time<<"\t";
+    revenewEarningStats<<time<<"\t";
+    revenewTotalStats<<time<<"\t";
+
+    for ( int i=0 ; i < (int)this->cars.size(); i++) {
+        revenewLossesStats<<this->cars[i]->totalRevenue.getLosses()<<"\t";
+        revenewEarningStats<<this->cars[i]->totalRevenue.getEarnings()<<"\t";
+        revenewTotalStats<<this->cars[i]->totalRevenue.getTotalRevenue()<<"\t";
+    }
+    revenewLossesStats<<endl;
+    revenewEarningStats<<endl;
+    revenewTotalStats<<endl;
+
     return 0;
 }
 
@@ -350,6 +364,21 @@ int BaseScenario::updateCarRevenueStats(double time) {
  * @return
  */
 int BaseScenario::updateCarDistanceStats(double time) {
+
+    /*  distanceEarningStats.open (CARS_DISTANCE_EARNINGS_DAT_FILE);
+        distanceLossesStats.open (CARS_DISTANCE_LOSSES_DAT_FILE);
+        distanceTotalStats.open (CARS_DISTANCE_TOTAL_DAT_FILE); */
+    distanceEarningStats<<time<<"\t";
+    distanceLossesStats<<time<<"\t";
+    distanceTotalStats<<time<<"\t";
+    for ( int i=0 ; i < (int)this->cars.size(); i++) {
+        distanceEarningStats<<this->cars[i]->cumDistance.getMeteredDistance()<<"\t";
+        distanceLossesStats<<this->cars[i]->cumDistance.getWastage()<<"\t";
+        distanceTotalStats<<this->cars[i]->cumDistance.getTotalDistance()<<"\t";
+    }
+    distanceEarningStats<<endl;
+    distanceLossesStats<<endl;
+    distanceTotalStats<<endl;
     return 0;
 }
 
@@ -362,8 +391,8 @@ int BaseScenario::updateCarDistanceStats(double time) {
  * @return
  */
 int BaseScenario::updateServicePerLocationStats(double time, int sourceId, int destId, int wait, int result) {
-   // cout<<"update stats called with result "<<result<<endl;
-	servicePerLocationStats<<time<<"\t"<<sourceId<<"\t"<<destId<<"\t"<<wait<<"\t"<<result<<endl;
+    // cout<<"update stats called with result "<<result<<endl;
+    servicePerLocationStats<<time<<"\t"<<sourceId<<"\t"<<destId<<"\t"<<wait<<"\t"<<result<<endl;
     return 0;
 }
 
