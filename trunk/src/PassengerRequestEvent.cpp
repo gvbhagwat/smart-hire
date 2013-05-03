@@ -1,4 +1,5 @@
 #include "PassengerRequestEvent.hpp"
+#include "PassengerServicedEventNoRecharge.hpp"
 #include <iostream>
 using namespace std;
 
@@ -20,7 +21,7 @@ void PassengerRequestEvent::handle(EventList& eventList) {
 
         int timeCarLocationToSource = baseScenario.leastTimeMatrix[ baseScenario.cars[i]->currlocation.id ][ sourceLocation.id ];
 
-        if( baseScenario.cars[i]->isHired == false && ( timeCarLocationToSource < waitingTime ) ) {
+        if( baseScenario.cars[i]->availibility == 0 && ( timeCarLocationToSource < waitingTime ) ) {
 
             firstFilterCount++;
 
@@ -89,7 +90,7 @@ void PassengerRequestEvent::handle(EventList& eventList) {
 
         // cout<<"Out of selected cars: "<<selectedCars.size()<<" Final 3rd Filter Choosen Car:"<<choosenCarId<<endl;
 
-        baseScenario.cars[choosenCarId]->isHired = true;
+        baseScenario.cars[choosenCarId]->availibility = 1;
 
         int distanceCarLocationToDestination =
             baseScenario.shortestDistanceMatrix[ sourceLocation.id ][ destLocation.id ] +
@@ -103,6 +104,16 @@ void PassengerRequestEvent::handle(EventList& eventList) {
 
         baseScenario.updateServicePerLocationStats(time,sourceLocation.id,destLocation.id,waitingTime, (int)serviceResult);
 
+        // calculate
+
+        int timeCarLocationToDestination = baseScenario.leastTimeMatrix[ sourceLocation.id ][ destLocation.id ] +
+                                           baseScenario.leastTimeMatrix[ baseScenario.cars[choosenCarId]->currlocation.id ][ sourceLocation.id ];
+
+		eventList.push( new PassengerServicedEventNoRecharge(timeCarLocationToDestination, baseScenario, choosenCarId) );
+
+
+		
+			
         return;
     }
 }
