@@ -33,8 +33,8 @@ class Car {
 	/* Cumulative Revenue collected by the car till the current time */
 	Revenue totalRevenue;
 	
-	/* STATE - isHired*/
-	bool isHired;
+	/* STATE - availibility |  0 means Available, 1 means Hired, 2 means Unusable */
+	int availibility;
 
 
 	public:
@@ -45,12 +45,8 @@ class Car {
 
 	Car(int id, Battery battery, Location currLocation);
 	
-	Car(int id, Battery battery, Location currLocation, Distance cumDistance, Revenue rev, bool isHired);
+	Car(int id, Battery battery, Location currLocation, Distance cumDistance, Revenue rev, int availibility);
 
-
-	
-
-	
 
 	//GETTERS
 	
