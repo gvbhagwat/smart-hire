@@ -23,16 +23,16 @@ class Car {
 	
 	/* Battery of the car */
 	Battery battery;
+	
+	/* STATE - current Location of the Car */
+	Location currlocation;
+	
+	/* Cumulative Distance travelled by the car till the current time */
+	Distance cumDistance;
 
 	/* Cumulative Revenue collected by the car till the current time */
 	Revenue totalRevenue;
 	
-	/* Cumulative Distance travelled by the car till the current time */
-	Distance cumDistance;
-	
-	/* STATE - current Location of the Car */
-	Location currlocation;
-
 	/* STATE - isHired*/
 	bool isHired;
 
@@ -44,7 +44,11 @@ class Car {
 	Car(int id, Battery battery);
 
 	Car(int id, Battery battery, Location currLocation);
+	
+	Car(int id, Battery battery, Location currLocation, Distance cumDistance, Revenue rev, bool isHired);
 
+
+	
 
 	
 

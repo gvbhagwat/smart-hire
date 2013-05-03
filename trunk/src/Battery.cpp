@@ -103,3 +103,14 @@ double Battery::dischargeBatteryByDistance(int metres){
 	return dischargeBattery(amount);
 }
 
+
+/**
+ * @brief this function will return how much battery to consume for give distance for this car
+ *
+ * @param meters distance
+ *
+ * @return battery charge required to travel given distance
+ **/
+double Battery::chargeRequiredByDistance(int meters){
+		return dischargePerMetre * meters;
+}
