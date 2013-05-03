@@ -33,6 +33,7 @@ class BaseScenario: public Scenario{
 
 	// protected member functions
 	void printHeader(ofstream& outputstream);
+	void printHeaderServicePerLocation(ofstream& outputstream);
 	// Initialization
 	
 	int initializeDistanceMatrix();

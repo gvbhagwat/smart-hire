@@ -20,7 +20,7 @@ using namespace std;
  * @param seedIti):
  */
 BaseScenario::BaseScenario(EventList& eventList, int _cars, int _cust, double seedCar, double seedIti):
-    Scenario(eventList), nCars(_cars), nCustomerRequests(_cust), seedCarLocation(seedCar), seedItinerary(seedIti) {
+        Scenario(eventList), nCars(_cars), nCustomerRequests(_cust), seedCarLocation(seedCar), seedItinerary(seedIti) {
 
     // open all the simulation dump dat files
     revenewLossesStats.open (CARS_REVENUE_LOSSES_DAT_FILE);
@@ -42,7 +42,7 @@ BaseScenario::BaseScenario(EventList& eventList, int _cars, int _cust, double se
     printHeader(distanceEarningStats);
     printHeader(distanceLossesStats);
     printHeader(distanceTotalStats);
-    printHeader(servicePerLocationStats);
+    printHeaderServicePerLocation(servicePerLocationStats);
 }
 
 
@@ -74,13 +74,15 @@ BaseScenario::~BaseScenario() {
 void BaseScenario::printHeader(ofstream& outputstream) {
 
     outputstream<<"Time\t";
-    for(int i=0; i<50; i++) {
+    for (int i=0; i<50; i++) {
         outputstream<<"car_"<<i<<"\t";
     }
     outputstream<<"\n";
 }
 
-
+void BaseScenario::printHeaderServicePerLocation(ofstream& outputstream){
+	outputstream<<"Time\t"<<"sourceId\t"<<"destId\t"<<"waitTime\t"<<"result"<<endl;
+}
 /**
  * @brief
  *
@@ -94,20 +96,20 @@ int BaseScenario::initializeDistanceMatrix() {
     // define the ifstream object
     ifstream distanceData(DISTANCE_MATRIX_RESOURCE_FILE);
 
-    if(distanceData.is_open()) {
+    if (distanceData.is_open()) {
 
-        while(std::getline(distanceData,line)) {
+        while (std::getline(distanceData,line)) {
 
             stringstream lineStream(line);
             string cell;
 
-            while(getline(lineStream, cell, ',')) {
+            while (getline(lineStream, cell, ',')) {
 
                 //convert string into and int
                 istringstream (cell) >> shortestDistanceMatrix[i][j];
                 j++;
 
-                if(j == NUMBER_OF_STATIONS) {
+                if (j == NUMBER_OF_STATIONS) {
                     i++;
                     j=0;
                 }
@@ -137,20 +139,20 @@ int BaseScenario::initializeTimeMatrix() {
     // define the ifstream object
     ifstream timeData(TIME_MATRIX_RESOURCE_FILE);
 
-    if(timeData.is_open()) {
+    if (timeData.is_open()) {
 
-        while(std::getline(timeData,line)) {
+        while (std::getline(timeData,line)) {
 
             stringstream lineStream(line);
             string cell;
 
-            while(getline(lineStream, cell, ',')) {
+            while (getline(lineStream, cell, ',')) {
 
                 //convert string into and int
                 istringstream (cell) >> leastTimeMatrix[i][j];
                 j++;
 
-                if(j == NUMBER_OF_STATIONS) {
+                if (j == NUMBER_OF_STATIONS) {
                     i++;
                     j=0;
                 }
@@ -182,9 +184,9 @@ int BaseScenario::initializeStationVector() {
     // define the ifstream object
     ifstream stationData(STATION_COORDINATES_RESOURCE_FILE);
 
-    if(stationData.is_open()) {
+    if (stationData.is_open()) {
 
-        while(std::getline(stationData,line)) {
+        while (std::getline(stationData,line)) {
             Location newLocation(locationid, line);
             stations.push_back(newLocation);
         }
@@ -214,7 +216,7 @@ int BaseScenario::initializeCars(double seedLocation) {
     srand(seedCarLocation);
     //	seedRandomizer();
 
-    for(i=0; i<nCars; i++) {
+    for (i=0; i<nCars; i++) {
         locationId = rand() % nStations;
         Location initialLocation(locationId);
         initialLocation.name = stations[locationId].name;
@@ -242,21 +244,21 @@ int BaseScenario::initializeEvents(double seedItinerary) {
     //randomizing the output
     srand(seedItinerary);
 
-    for(int i = 0; i < this->nCustomerRequests; i++) {
+    for (int i = 0; i < this->nCustomerRequests; i++) {
 
         sourceLocationId = rand() % nStations;
-		Location source(sourceLocationId, stations[sourceLocationId].name);
+        Location source(sourceLocationId, stations[sourceLocationId].name);
 
         destinationLocationId = rand() % nStations;
-		Location dest(destinationLocationId, stations[destinationLocationId].name);
+        Location dest(destinationLocationId, stations[destinationLocationId].name);
 
         waitingTime = rand() % (MAX_WAITING_TIME - MIN_WAITING_TIME) + MIN_WAITING_TIME;
         timeofRequests = (rand() % (SIM_DURATION)) + SIM_START;
 
-		//cout<<"Request generated at time : "<<timeofRequests<<" from source = "<<
-		//sourceLocationId<<" to destination = "<<destinationLocationId<<" wait = "<<waitingTime<<endl;
+        //cout<<"Request generated at time : "<<timeofRequests<<" from source = "<<
+        //sourceLocationId<<" to destination = "<<destinationLocationId<<" wait = "<<waitingTime<<endl;
 
-		getEventList().push(new PassengerRequestEvent(timeofRequests,*this,source,dest,waitingTime));
+        getEventList().push(new PassengerRequestEvent(timeofRequests,*this,source,dest,waitingTime));
 
 
     }
@@ -352,7 +354,8 @@ int BaseScenario::updateCarDistanceStats(double time) {
  * @return
  */
 int BaseScenario::updateServicePerLocationStats(double time, int sourceId, int destId, int wait, int result) {
-	cout<<"update stats called with result "<<result<<endl;
+   // cout<<"update stats called with result "<<result<<endl;
+	servicePerLocationStats<<time<<"\t"<<sourceId<<"\t"<<destId<<"\t"<<wait<<"\t"<<result<<endl;
     return 0;
 }
 
@@ -388,7 +391,7 @@ void BaseScenario::printShortestDistancematrix() {
     		cout<<i<<","<<j<<"#"<<shortestDistanceMatrix[i][j]<<" "<<leastTimeMatrix[i][j]<<endl;
     	}
     	*/
-    for(int i =0; i < nCars; i++) {
+    for (int i =0; i < nCars; i++) {
 
         cout<<"car id #"<<cars[i]->getCarId()<<" currCharge "<<cars[i]->battery.getCurrentCharge()<<" location #"<<cars[i]->currlocation.id<<" "<<cars[i]->currlocation.name<<endl;
 
