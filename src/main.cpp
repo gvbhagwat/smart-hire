@@ -58,21 +58,19 @@ int main(int argc, char** argv)
 		eventList.pop();
 		
 		// Set current time to time of event
-		time = event->getTime();
+		time = event->getTime()	;
+
+		cout<<"time is "<<time<<endl;
 
 		// Handle the event
 		event->handle(eventList);
 
-		
 		// Delete the event object to free memory
 		delete event;
 
 		// Update statistics for scenario
 		scenario->updateStatistics(time);
 
-		cout<<time<<endl;
-
-		
 	}
 
 	//std::cout<<"Event List Empty"<<std::endl;	

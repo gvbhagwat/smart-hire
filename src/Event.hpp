@@ -31,7 +31,7 @@ class Event {
 		Event(int time) : time(time) {}
 
 		/* Returns the time-stamp of the event */
-		const int getTime() { return time; }
+		virtual const int getTime() { return time;}
 
 		/* Handle this event */
 		virtual void handle(EventList& eventList) = 0;
