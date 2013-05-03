@@ -63,11 +63,16 @@ int main(int argc, char** argv)
 		// Handle the event
 		event->handle(eventList);
 
+		
 		// Delete the event object to free memory
 		delete event;
 
 		// Update statistics for scenario
-		//scenario->updateStatistics(time);
+		scenario->updateStatistics(time);
+
+		cout<<time<<endl;
+
+		
 	}
 
 	//std::cout<<"Event List Empty"<<std::endl;	
