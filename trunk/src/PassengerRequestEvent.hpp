@@ -19,6 +19,7 @@ class PassengerRequestEvent : public Event{
 
 	PassengerRequestEvent(int time, BaseScenario& baseScenario, Location source, Location dest, int wait);
 	void handle(EventList& eventList);
+
 };
 
 #endif

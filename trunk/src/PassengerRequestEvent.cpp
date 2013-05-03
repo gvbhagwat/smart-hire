@@ -106,7 +106,8 @@ void PassengerRequestEvent::handle(EventList& eventList) {
 
         // calculate
 
-        int timeCarLocationToDestination = baseScenario.leastTimeMatrix[ sourceLocation.id ][ destLocation.id ] +
+        int timeCarLocationToDestination = time +
+										   baseScenario.leastTimeMatrix[ sourceLocation.id ][ destLocation.id ] +
                                            baseScenario.leastTimeMatrix[ baseScenario.cars[choosenCarId]->currlocation.id ][ sourceLocation.id ];
 
 		eventList.push( new PassengerServicedEventNoRecharge(timeCarLocationToDestination, baseScenario, choosenCarId) );
