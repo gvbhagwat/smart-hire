@@ -9,11 +9,12 @@ PassengerRequestEvent::PassengerRequestEvent(int _time, BaseScenario& _scenario,
 
 void PassengerRequestEvent::handle(EventList& eventList) {
 
-    cout<<"Event handled at time "<<time<<endl;
+    bool serviceResult = false;
+    // cout<<"Event handled at time "<<time<<endl;
 
     std::vector<Car*> selectedCars;
 
-	int firstFilterCount = 0;
+    int firstFilterCount = 0;
 
     for(unsigned int i=0 ; i<baseScenario.cars.size() ; i++) {
 
@@ -21,7 +22,7 @@ void PassengerRequestEvent::handle(EventList& eventList) {
 
         if( baseScenario.cars[i]->isHired == false && ( timeCarLocationToSource < waitingTime ) ) {
 
-			firstFilterCount++;
+            firstFilterCount++;
 
             // cout << "First filter car Id = "<<baseScenario.cars[i]->getCarId()<<endl;
 
@@ -34,14 +35,14 @@ void PassengerRequestEvent::handle(EventList& eventList) {
 
             int chargeRequired = baseScenario.cars[i]->battery.chargeRequiredByDistance(distanceCarLocationToDestination);
 
-	        // cout<<" currCharge "<<currentCharge <<" DOD "<<DOD<<" chargeRequired "<<chargeRequired<<endl;
+            // cout<<" currCharge "<<currentCharge <<" DOD "<<DOD<<" chargeRequired "<<chargeRequired<<endl;
             // cout<<" currCharge -DOD "<<currentCharge -DOD <<" chargeRequired "<<chargeRequired<<endl;
             // cout<<" ----------"<<endl;
 
 
             if( ( currentCharge - DOD ) > chargeRequired ) {
 
-               //  cout<<"Second Charge Filter"<<baseScenario.cars[i]->getCarId()<<endl;
+                //  cout<<"Second Charge Filter"<<baseScenario.cars[i]->getCarId()<<endl;
 
                 int selId = baseScenario.cars[i]->getCarId();
                 Battery b (baseScenario.cars[i]->battery);
@@ -61,7 +62,11 @@ void PassengerRequestEvent::handle(EventList& eventList) {
     // cout<<"Number of selected cars after 2nd Filter "<<selectedCars.size()<<endl;
 
     if(selectedCars.empty()) {
-        cout<<"No cars could pass even the Two fitlers :( "<<endl;
+
+        //cout<<"No cars could pass even the Two fitlers :( "<<endl;
+
+        baseScenario.updateServicePerLocationStats(time,sourceLocation.id,destLocation.id,waitingTime,(int)serviceResult);
+
         return;
     }
     else {
@@ -82,17 +87,23 @@ void PassengerRequestEvent::handle(EventList& eventList) {
 
         int choosenCarId=choosenCar->getCarId();
 
-        cout<<"Out of selected cars: "<<selectedCars.size()<<" Final 3rd Filter Choosen Car:"<<choosenCarId<<endl;
+        // cout<<"Out of selected cars: "<<selectedCars.size()<<" Final 3rd Filter Choosen Car:"<<choosenCarId<<endl;
 
-		baseScenario.cars[choosenCarId]->isHired = true;
+        baseScenario.cars[choosenCarId]->isHired = true;
 
-		int distanceCarLocationToDestination =
-				baseScenario.shortestDistanceMatrix[ sourceLocation.id ][ destLocation.id ] +
-				baseScenario.shortestDistanceMatrix[ baseScenario.cars[choosenCarId]->currlocation.id ][ sourceLocation.id ];
+        int distanceCarLocationToDestination =
+            baseScenario.shortestDistanceMatrix[ sourceLocation.id ][ destLocation.id ] +
+            baseScenario.shortestDistanceMatrix[ baseScenario.cars[choosenCarId]->currlocation.id ][ sourceLocation.id ];
 
-		baseScenario.cars[choosenCarId]->battery.dischargeBatteryByDistance( distanceCarLocationToDestination );
-        
-		//cout<<"Number of cars is was"<<baseScenario.cars.size()<<endl;
+        baseScenario.cars[choosenCarId]->battery.dischargeBatteryByDistance( distanceCarLocationToDestination );
+
+        //cout<<"Number of cars is was"<<baseScenario.cars.size()<<endl;
+
+        serviceResult = true;
+
+        baseScenario.updateServicePerLocationStats(time,sourceLocation.id,destLocation.id,waitingTime, (int)serviceResult);
+
+        return;
     }
 }
 

@@ -48,7 +48,6 @@ class BaseScenario: public Scenario{
 	int updateCarRevenueStats(double time);
 	int updateCarDistanceStats(double time);
 
-	int updateServicePerLocationStats(double time);
 
 
 
@@ -68,7 +67,9 @@ class BaseScenario: public Scenario{
 	BaseScenario(EventList& eventList, int nCars, int CustomerReuqests, double seedCarLocation, double seedItinerary);
 	~BaseScenario();
 	int initializeScenario();
-	int updateStatistics(double time); 
+	int updateStatistics(double time);
+
+	int updateServicePerLocationStats(double time, int sourceId, int destId, int waitingTime, int result);
 
 };
 
