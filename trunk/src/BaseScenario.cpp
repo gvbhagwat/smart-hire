@@ -351,7 +351,8 @@ int BaseScenario::updateCarDistanceStats(double time) {
  *
  * @return
  */
-int BaseScenario::updateServicePerLocationStats(double time) {
+int BaseScenario::updateServicePerLocationStats(double time, int sourceId, int destId, int wait, int result) {
+	cout<<"update stats called with result "<<result<<endl;
     return 0;
 }
 
@@ -372,8 +373,6 @@ int BaseScenario::updateStatistics(double time) {
     status += updateCarRevenueStats(time);
 
     status += updateCarDistanceStats(time);
-
-    status += updateServicePerLocationStats(time);
 
     return status;
 }
