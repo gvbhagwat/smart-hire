@@ -38,6 +38,7 @@ clean:
 	rm -f config.*.*
 	rm -f gmon.out 
 	rm -f ../simdumps/*
+	rm -f ../scripts/*~
 	rm -f temp_*.cfg
 
 # Other Dependencies

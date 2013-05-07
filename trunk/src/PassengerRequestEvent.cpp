@@ -1,50 +1,58 @@
+// Author: Gaurav Bhagwat
+
 #include "PassengerRequestEvent.hpp"
 #include "PassengerServicedEventNoRecharge.hpp"
 #include <iostream>
 using namespace std;
 
+/**
+ * @brief
+ *
+ * @param _time
+ * @param _scenario
+ * @param source
+ * @param dest
+ * @param wait
+ *
+ * @return
+ **/
 PassengerRequestEvent::PassengerRequestEvent(int _time, BaseScenario& _scenario, Location source, Location dest, int wait):
     Event(time), baseScenario(_scenario), sourceLocation(source), destLocation(dest), waitingTime(wait) {
     time = _time;
 }
 
+/**
+ * @brief
+ *
+ * @param eventList
+ **/
 void PassengerRequestEvent::handle(EventList& eventList) {
 
-    bool serviceResult = false;
-    // cout<<"Event handled at time "<<time<<endl;
+    bool serviceResult = false;			// flag
+    std::vector<Car*> selectedCars;		// new vector of chosen cars
 
-    std::vector<Car*> selectedCars;
-
-    int firstFilterCount = 0;
-
+	// For each car
     for(unsigned int i=0 ; i<baseScenario.cars.size() ; i++) {
-
+			
+		// find the time required by the car to reach to passenger
         int timeCarLocationToSource = baseScenario.leastTimeMatrix[ baseScenario.cars[i]->currlocation.id ][ sourceLocation.id ];
 
+		// First filter : screen the cars which are nto available nor can they satisfy waiting time criteria
         if( baseScenario.cars[i]->availibility == 0 && ( timeCarLocationToSource < waitingTime ) ) {
 
-            firstFilterCount++;
-
-            // cout << "First filter car Id = "<<baseScenario.cars[i]->getCarId()<<endl;
-
-            int distanceCarLocationToDestination = baseScenario.shortestDistanceMatrix[ sourceLocation.id ][ destLocation.id ] +
+            // For these screened cars, find total distance taken to complete the journey as per customer's requests
+			int distanceCarLocationToDestination = baseScenario.shortestDistanceMatrix[ sourceLocation.id ][ destLocation.id ] +
                                                    baseScenario.shortestDistanceMatrix[ baseScenario.cars[i]->currlocation.id ][ sourceLocation.id ];
 
+			// Now, calculate the battery requirements of the journey
             int currentCharge = baseScenario.cars[i]->battery.getCurrentCharge();
-
             int DOD = baseScenario.cars[i]->battery.getDepthOfDischarge();
-
             int chargeRequired = baseScenario.cars[i]->battery.chargeRequiredByDistance(distanceCarLocationToDestination);
 
-            // cout<<" currCharge "<<currentCharge <<" DOD "<<DOD<<" chargeRequired "<<chargeRequired<<endl;
-            // cout<<" currCharge -DOD "<<currentCharge -DOD <<" chargeRequired "<<chargeRequired<<endl;
-            // cout<<" ----------"<<endl;
+            // Second Filter: Screen the cars which have enough battery for the journey
+			if( ( currentCharge - DOD ) > chargeRequired ) {
 
-
-            if( ( currentCharge - DOD ) > chargeRequired ) {
-
-                //  cout<<"Second Charge Filter"<<baseScenario.cars[i]->getCarId()<<endl;
-
+				// add those selected cars to a new set
                 int selId = baseScenario.cars[i]->getCarId();
                 Battery b (baseScenario.cars[i]->battery);
                 Location l (baseScenario.cars[i]->currlocation);
@@ -57,30 +65,25 @@ void PassengerRequestEvent::handle(EventList& eventList) {
         }
     }
 
-    int minTime = 100000;
+   	 
 
-    // cout<<"Number of selected cars after 1st Filter "<<firstFilterCount<<endl;
-    // cout<<"Number of selected cars after 2nd Filter "<<selectedCars.size()<<endl;
-
+	// if there are no cars that can satisfy the time requirements (and the battery requirements) 
     if(selectedCars.empty()) {
 
-        //cout<<"No cars could pass even the Two fitlers :( "<<endl;
-
+		// Publish the event failure 
         baseScenario.updateServicePerLocationStats(time,sourceLocation.id,destLocation.id,waitingTime,(int)serviceResult);
-
         return;
     }
+	// case when cars do exist which can satisfy the criteria
     else {
 
-
-        Car* choosenCar;
-
+		// Optimization #01: select the car with minimum time required, choose from the "selected Cars"
+		int minTime = 100000;
+        Car* choosenCar = NULL ;
         for(unsigned int i=0 ; i<selectedCars.size() ; i++) {
 
             int timeCarLocationToSource=baseScenario.leastTimeMatrix[selectedCars[i]->currlocation.id][sourceLocation.id];
-
             if( timeCarLocationToSource < minTime) {
-
                 minTime = timeCarLocationToSource;
                 choosenCar=selectedCars[i];
             }
@@ -88,34 +91,45 @@ void PassengerRequestEvent::handle(EventList& eventList) {
 
         int choosenCarId=choosenCar->getCarId();
 
-        // cout<<"Out of selected cars: "<<selectedCars.size()<<" Final 3rd Filter Choosen Car:"<<choosenCarId<<endl;
+		// The car has been chosen, now update its distance, battery and revenue statistics
 
-        baseScenario.cars[choosenCarId]->availibility = 1;
+		// First "hire" the car
+		baseScenario.cars[choosenCarId]->availibility = 1;
 
-        int distanceCarLocationToDestination =
-            baseScenario.shortestDistanceMatrix[ sourceLocation.id ][ destLocation.id ] +
-            baseScenario.shortestDistanceMatrix[ baseScenario.cars[choosenCarId]->currlocation.id ][ sourceLocation.id ];
+		// Second A:  calculate the total distance required
+        int distCarToSource  =  baseScenario.shortestDistanceMatrix[ sourceLocation.id ][ destLocation.id ];
+		int distSourceToDest =  baseScenario.shortestDistanceMatrix[ baseScenario.cars[choosenCarId]->currlocation.id ][ sourceLocation.id ];
 
-        baseScenario.cars[choosenCarId]->battery.dischargeBatteryByDistance( distanceCarLocationToDestination );
+		// Second B: Update the distance by loss and by gain
+		baseScenario.cars[choosenCarId]->cumDistance.addMeteredDistance(distSourceToDest);
+		baseScenario.cars[choosenCarId]->cumDistance.addWastage(distCarToSource);
 
-        //cout<<"Number of cars is was"<<baseScenario.cars.size()<<endl;
+		// Second C: Update the revenue generated by the travel and/or losses
+		baseScenario.cars[choosenCarId]->totalRevenue.addEarningsByDistance(distSourceToDest);
+		baseScenario.cars[choosenCarId]->totalRevenue.addLossesByDistance(distCarToSource);
 
+
+		// Third: discharge the battery
+        baseScenario.cars[choosenCarId]->battery.dischargeBatteryByDistance( distCarToSource + distSourceToDest );
+
+
+		// Fourth: update the service result
         serviceResult = true;
 
+		// Fifth: Publish the event stats (successful)
         baseScenario.updateServicePerLocationStats(time,sourceLocation.id,destLocation.id,waitingTime, (int)serviceResult);
 
-        // calculate
+        // Finally, and most important, schedule car free event after the travel time
 
+		// calculate the time
         int timeCarLocationToDestination = time +
-										   baseScenario.leastTimeMatrix[ sourceLocation.id ][ destLocation.id ] +
+                                           baseScenario.leastTimeMatrix[ sourceLocation.id ][ destLocation.id ] +
                                            baseScenario.leastTimeMatrix[ baseScenario.cars[choosenCarId]->currlocation.id ][ sourceLocation.id ];
 
-		eventList.push( new PassengerServicedEventNoRecharge(timeCarLocationToDestination, baseScenario, choosenCarId) );
-
-
-		
-			
-        return;
+		// generate a new event
+        eventList.push( new PassengerServicedEventNoRecharge(timeCarLocationToDestination, baseScenario, choosenCarId) );
+        
+		return;
     }
 }
 
