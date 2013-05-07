@@ -28,6 +28,7 @@ class BaseScenario: public Scenario{
 		distanceEarningStats,
 		distanceLossesStats,
 		distanceTotalStats,
+		passengerReqArrivalStats,
 		servicePerLocationStats;
 
 
