@@ -61,6 +61,7 @@ extern "C" {
 
 #define SERVICE_PER_LOCATION_STATS_FILE 		config_get_string("SERVICE_PER_LOCATION_STATS_FILE")
 
+#define PASSENGER_REQ_ARRIVAL_STATS_FILE 		config_get_string("PASSENGER_REQ_ARRIVAL_STATS_FILE")
 
 /* Meta configuration */
 #define EXEC_TRACE	config_get_int("EXEC_TRACE")

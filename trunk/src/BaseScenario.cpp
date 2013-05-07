@@ -32,6 +32,7 @@ BaseScenario::BaseScenario(EventList& eventList, int _cars, int _cust, double se
     distanceLossesStats.open (CARS_DISTANCE_LOSSES_DAT_FILE);
     distanceTotalStats.open (CARS_DISTANCE_TOTAL_DAT_FILE);
     servicePerLocationStats.open (SERVICE_PER_LOCATION_STATS_FILE);
+    passengerReqArrivalStats.open(PASSENGER_REQ_ARRIVAL_STATS_FILE);
 
     printHeader(batteryPowerStats);
 
@@ -61,6 +62,7 @@ BaseScenario::~BaseScenario() {
     distanceLossesStats.close();
     distanceTotalStats.close();
     servicePerLocationStats.close();
+    passengerReqArrivalStats.close();
     // destroy the event List
 }
 
@@ -256,8 +258,9 @@ int BaseScenario::initializeEvents(double seedItinerary) {
         timeofRequests = (rand() % (SIM_DURATION)) + SIM_START;
 
         //cout<<"Request generated at time : "<<timeofRequests<<" from source = "<<
-        //sourceLocationId<<" to destination = "<<destinationLocationId<<" wait = "<<waitingTime<<endl;
+	//sourceLocationId<<" to destination = "<<destinationLocationId<<" wait = "<<waitingTime<<endl;
 
+	passengerReqArrivalStats<<timeofRequests<<endl;
         getEventList().push(new PassengerRequestEvent(timeofRequests,*this,source,dest,waitingTime));
 
 
