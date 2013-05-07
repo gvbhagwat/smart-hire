@@ -242,9 +242,15 @@ int BaseScenario::initializeEvents(double seedItinerary) {
     int sourceLocationId, destinationLocationId, waitingTime; //waiting time in seconds
     int timeofRequests;
     int nStations = (int)this->stations.size();
-
+    int is9am,is8am,isNight,is6am;
+	
     //randomizing the output
-    srand(seedItinerary);
+	srand(seedItinerary);
+
+	is9am=1;
+	is8am=1;
+	is6am=1;
+	isNight=1;
 
     for (int i = 0; i < this->nCustomerRequests; i++) {
 
@@ -259,7 +265,69 @@ int BaseScenario::initializeEvents(double seedItinerary) {
 
         //cout<<"Request generated at time : "<<timeofRequests<<" from source = "<<
 	//sourceLocationId<<" to destination = "<<destinationLocationId<<" wait = "<<waitingTime<<endl;
+	
+	if( i % 4 == 0){
+		if(is9am == 1){
+			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*9 + SIM_START;
+			is9am = 0;
+		}
+		else{
+			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*17 + SIM_START;
+			is9am = 1;
+		}
+	}
+	if( i % 4 == 1){
+		if(is8am == 1){
+			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*8 + SIM_START;
+			is8am = 2;
+		}
+		else if(is8am == 2){
+			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*10 + SIM_START;
+			is8am = 3;
+		}
+		else if(is8am == 3){
+			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*16 + SIM_START;
+			is8am = 4;
+		}
+		else if(is8am == 4){
+			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*18 + SIM_START;
+			is8am = 1;
+		}
+	}
+	if( i % 4 == 2){
+		if(is6am == 1){
+			timeofRequests = (rand() % (SIM_DURATION/12)) +  (SIM_DURATION/24)*6 + SIM_START;
+			is6am = 2;
+		}
+		else if(is6am == 2){
+			timeofRequests = (rand() % (SIM_DURATION/12)) +  (SIM_DURATION/24)*11 + SIM_START;
+			is6am = 3;
+		}
+		else if(is6am == 3){
+			timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*13 + SIM_START;
+			is6am = 4;
+		}
+		else if(is6am == 4){
+			timeofRequests = (rand() % (SIM_DURATION/12)) +  (SIM_DURATION/24)*19 + SIM_START;
+			is6am = 1;
+		}
+	}
+	if( i % 4 == 3){
+		if(isNight == 1){
+			timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*21 + SIM_START;
+			isNight = 2;
+		}
+		else if( isNight ==2) {
+			timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*0 + SIM_START;
+			isNight = 3;
+		}if( isNight ==3) {
+			timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*3 + SIM_START;
+			isNight = 1;
+		}
 
+	}
+
+	//Print Pasenger request Arrival time in file for analysis 
 	passengerReqArrivalStats<<timeofRequests<<endl;
         getEventList().push(new PassengerRequestEvent(timeofRequests,*this,source,dest,waitingTime));
 
