@@ -7,7 +7,7 @@ fi
 echo "#NumberOfCars TotalPassangerReq. SatiesfiedPassangerReq UnsatiesfiedPassangerReq">../data/nCarVariation.dat
 
 COUNTER=$1
-let FINAL=COUNTER+390
+let FINAL=COUNTER+1000
 while [  $COUNTER -lt $FINAL ]; do
       
 

@@ -22,10 +22,10 @@ set grid
 plot    "../data/nCarVariation.dat" using 1:2 title 'Total Passenger Request' with lines lw 1 lc 5 lt 1\
 , "../data/nCarVariation.dat" using 1:3 title 'Satisfied(0.001%)' with lines lw 3 lc 1 lt 1\
 , "../data/nCarVariation.dat" using 1:4 title 'Unsatisfied' with lines lw 2 lc 1 lt 4\
-, "../data/nCarVariation.dat" using 1:7 title 'Satisfied(0.002%)' with lines lw 3 lc 2 lt 1\
+, "../data/nCarVariation.dat" using 1:7 title 'Satisfied(0.00125%)' with lines lw 3 lc 2 lt 1\
 , "../data/nCarVariation.dat" using 1:8 title 'Unsatisfied' with lines lw 2 lc 2 lt 4\
-, "../data/nCarVariation.dat" using 1:11 title 'Satisfied(0.003%)' with lines lw 3 lc 3 lt 1\
+, "../data/nCarVariation.dat" using 1:11 title 'Satisfied(0.0015%)' with lines lw 3 lc 3 lt 1\
 , "../data/nCarVariation.dat" using 1:12 title 'Unsatisfied' with lines lw 2 lc 3 lt 4\
-, "../data/nCarVariation.dat" using 1:15 title 'Satisfied(0.004%)' with lines lw 3 lc 4 lt 1\
+, "../data/nCarVariation.dat" using 1:15 title 'Satisfied(0.00175%)' with lines lw 3 lc 4 lt 1\
 , "../data/nCarVariation.dat" using 1:16 title 'Unsatisfied' with lines lw 2 lc 4 lt 4
 set term wxt
