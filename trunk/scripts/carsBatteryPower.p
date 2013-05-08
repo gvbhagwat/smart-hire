@@ -24,6 +24,8 @@ plot    "../simdumps/carsBatteryPower.dat" using 1:2 title 'CAR 1' with lines lw
 , "../simdumps/carsBatteryPower.dat" using 1:3 title 'CAR 2' with lines lw 2 lc 2 lt 1\
 , "../simdumps/carsBatteryPower.dat" using 1:4 title 'CAR 3' with lines lw 2 lc 3 lt 1\
 , "../simdumps/carsBatteryPower.dat" using 1:5 title 'CAR 4' with lines lw 2 lc 4 lt 1\
-, "../simdumps/carsBatteryPower.dat" using 1:6 title 'CAR 5' with lines lw 2 lc 5 lt 1
+, "../simdumps/carsBatteryPower.dat" using 1:6 title 'CAR 5' with lines lw 2 lc 5 lt 1\
+, "../simdumps/carsBatteryPower.dat" using 1:21 title 'CAR 20' with lines lw 2 lc 6 lt 1\
+, "../simdumps/carsBatteryPower.dat" using 1:31 title 'CAR 30' with lines lw 2 lc 7 lt 1
 
 set term wxt
