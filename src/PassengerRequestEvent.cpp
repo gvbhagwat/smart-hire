@@ -221,11 +221,9 @@ void PassengerRequestEvent::handle(EventList& eventList) {
             serviceResult = true;
 
             // calculate the time
-            int timeCarLocationToDestination = time +
-                                               baseScenario.leastTimeMatrix[ sourceLocation.id ][ destLocation.id ] +
-                                               baseScenario.leastTimeMatrix[ baseScenario.cars[choosenCarId]->currlocation.id ][ sourceLocation.id ];
+            int timeCarLocationToDestination = time + baseScenario.leastTimeMatrix[ baseScenario.cars[choosenCarId]->currlocation.id ][ sourceLocation.id ];
 
-			delay = waitingTime - timeCarLocationToDestination;
+			delay = timeCarLocationToDestination - (waitingTime + time);
             
 			// Fifth: Publish the event stats (successful)
             baseScenario.updateServicePerLocationStats(time,sourceLocation.id,destLocation.id,waitingTime,delay,(int)serviceResult);
