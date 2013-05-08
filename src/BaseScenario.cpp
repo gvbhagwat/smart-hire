@@ -122,7 +122,7 @@ void BaseScenario::printHeaderServicePerLocation(ofstream& outputstream) {
 	if( modeServiceQuality == GUARANTEED_TIME )
 	    outputstream<<"Time\t"<<"sourceId\t"<<"destId\t"<<"waitTime\t"<<"result"<<endl;
 	else
-	    outputstream<<"Time\t"<<"sourceId\t"<<"destId\t"<<"waitTime\t"<<"delay\t"<<"result"<<endl;
+	    outputstream<<"Time\t"<<"sourceId\t"<<"destId\t"<<"waitTime\t"<<"result\t"<<"delay"<<endl;
 }
 /**
  * @brief
@@ -519,7 +519,7 @@ int BaseScenario::updateServicePerLocationStats(double time, int sourceId, int d
  */
 int BaseScenario::updateServicePerLocationStats(double time, int sourceId, int destId, int wait, int delay, int result) {
     // cout<<"update stats called with result "<<result<<endl;
-    servicePerLocationStats<<time<<"\t"<<sourceId<<"\t"<<destId<<"\t"<<wait<<"\t"<<delay<<"\t"<<result<<endl;
+    servicePerLocationStats<<time<<"\t"<<sourceId<<"\t"<<destId<<"\t"<<wait<<"\t"<<result<<"\t"<<delay<<endl;
     return 0;
 }
 /**
