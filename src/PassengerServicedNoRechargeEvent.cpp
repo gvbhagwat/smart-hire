@@ -1,4 +1,4 @@
-#include "PassengerServicedEventNoRecharge.hpp"
+#include "PassengerServicedNoRechargeEvent.hpp"
 #include <iostream>
 using namespace std;
 
@@ -11,7 +11,7 @@ using namespace std;
  *
  * @return 
  **/
-PassengerServicedEventNoRecharge::PassengerServicedEventNoRecharge(int _time, BaseScenario& _scenario, int _carId):
+PassengerServicedNoRechargeEvent::PassengerServicedNoRechargeEvent(int _time, BaseScenario& _scenario, int _carId):
     Event(time), baseScenario(_scenario), carId(_carId) {
     time = _time;
 }
@@ -21,7 +21,7 @@ PassengerServicedEventNoRecharge::PassengerServicedEventNoRecharge(int _time, Ba
  *
  * @param eventList 
  **/
-void PassengerServicedEventNoRecharge::handle(EventList& eventList) {
+void PassengerServicedNoRechargeEvent::handle(EventList& eventList) {
 	
 	// cout<<"Serviced Event handled at "<<time<<endl;
 
@@ -50,7 +50,7 @@ void PassengerServicedEventNoRecharge::handle(EventList& eventList) {
  *
  * @return 
  **/
-bool PassengerServicedEventNoRecharge::hasBatteryOverDishargeDepthButUnusable(int carId){
+bool PassengerServicedNoRechargeEvent::hasBatteryOverDishargeDepthButUnusable(int carId){
 	
 	bool hasInsufficientBattery = true;	
 	double allRoutesDischarge[50][50];

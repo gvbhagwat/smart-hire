@@ -24,6 +24,22 @@ extern "C" {
 #define SIM_START 			config_get_int("SIM_START")
 #define SIM_END				config_get_int("SIM_END")
 
+/* Simulation Modes Car Operation*/
+#define NO_RECHARGE			config_get_int("NO_RECHARGE")
+#define RECHARGE			config_get_int("RECHARGE")
+  
+/* Simulation Modes Quality of Service */
+#define GUARANTEED_TIME		config_get_int("GUARANTEED_TIME")
+#define DELAYED_TIME		config_get_int("DELAYED_TIME")
+
+
+/* Simulation Mode as Simulation Parameter */
+#define CAR_OPERATION		config_get_int("CAR_OPERATION")
+#define SERVICE_QUALITY		config_get_int("SERVICE_QUALITY")
+
+
+
+
 /* Simulation Parameters CUSTOMER INFORMATION */
 #define MIN_WAITING_TIME						config_get_int("MIN_WAITING_TIME")
 #define MAX_WAITING_TIME						config_get_int("MAX_WAITING_TIME")

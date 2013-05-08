@@ -4,7 +4,7 @@
 #include "Event.hpp"
 #include "BaseScenario.hpp"
 
-class PassengerServicedEventNoRecharge : public Event{
+class PassengerServicedNoRechargeEvent : public Event{
 	
 
 	protected:
@@ -14,7 +14,7 @@ class PassengerServicedEventNoRecharge : public Event{
 
 	public:
 
-	PassengerServicedEventNoRecharge(int time, BaseScenario& baseScenario, int CarId);
+	PassengerServicedNoRechargeEvent(int time, BaseScenario& baseScenario, int CarId);
 	bool hasBatteryOverDishargeDepthButUnusable(int carId);
 	void handle(EventList& eventList);
 };
