@@ -197,6 +197,7 @@ shortest routes from source to destination.
 
 \section{Simulation Results: No Recharge}
 
+\subsection{ Modeling requests }
 \begin{figure}[h!t]
 \centering
 \includegraphics[scale=0.9]{../plots/passengerArrivalDistribution_old}
@@ -208,12 +209,9 @@ shortest routes from source to destination.
 \includegraphics[scale=0.9]{../plots/passengerArrivalDistribution_9AM5PM}
 \caption{Passenger Arrival Request modeled using customised function}\label{fig:SVM}
 \end{figure}
+\newpage
 
-\begin{figure}[h!t]
-\centering
-\includegraphics[scale=0.9]{../plots/EarnngsVsLosses}
-\caption{Earnigs Vs Losses}\label{fig:SVM}
-\end{figure}
+\subsection{ How does battery performance affect the service?}
 
 \begin{figure}[h!t]
 \centering
@@ -221,21 +219,38 @@ shortest routes from source to destination.
 \caption{Effect of Battery performance on service}\label{fig:SVM}
 \end{figure}
 
+\begin{itemize}
+\item The expectation was that as the disharging rate increases, the service should worsen and
+	  more and more cars would be rendered useless as the time progresses.
+\item The service drop is expected to be linear. Less the number of cars, less is the service ratio. More the number of cars, more requests can be satisfied.	  
+\item For higher battery discharing rates the results came out to be expected. However, for low discharing rates even with increasing number of cars, the requests seem to be not satisfied. 
+\item The possible explanation is that even though there are large number of cars with ample battery, there are some routes that are too long to be satisfied unless some car is found with full battery.
+\end{itemize}
+\newpage
+
+\subsection{ Battery behaviour }
 \begin{figure}[h!t]
 \centering
 \includegraphics[scale=0.9]{../plots/carsBatteryPower}
 \caption{Change in Battery charge with time}\label{fig:SVM}
 \end{figure}
 
+\subsection{ Great Losses for good guarantees of time }
 \begin{figure}[h!t]
 \centering
-\includegraphics[scale=0.9]{../plots/Delay}
-\caption{Delay In Servicing Passenger}\label{fig:SVM}
+\includegraphics[scale=0.9]{../plots/EarnngsVsLosses}
+\caption{Earnigs Vs Losses}\label{fig:SVM}
 \end{figure}
+
+
+
 
 
 \chapter{Conclusion}
 
+We have only completed the scenario for no recharge so far and we have interesting results to explore this problem more. We intend to also account for
+the recharging scenarios. Although one may comment that everything is heavily dependent on the customer requests, we must still expect the battery behaviour and
+service to be the same.
 
 \subsection*{Acknowledgement}
 I would like to thank Prof. Krithi Ramamrithm and Prof. Purushottam Kulkarni for their constant support and guidance.% to keep me motivated.
