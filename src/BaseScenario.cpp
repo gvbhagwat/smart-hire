@@ -265,8 +265,10 @@ int BaseScenario::initializeEvents(double seedItinerary) {
 
         //cout<<"Request generated at time : "<<timeofRequests<<" from source = "<<
 	//sourceLocationId<<" to destination = "<<destinationLocationId<<" wait = "<<waitingTime<<endl;
-	
-	if( i % 4 == 0){
+
+
+	//Code to genarates passenger arrival request as per 9AM 5PM distribution	
+	if( i % 5 == 0){
 		if(is9am == 1){
 			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*9 + SIM_START;
 			is9am = 0;
@@ -276,7 +278,7 @@ int BaseScenario::initializeEvents(double seedItinerary) {
 			is9am = 1;
 		}
 	}
-	if( i % 4 == 1){
+	if( i % 5 == 1){
 		if(is8am == 1){
 			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*8 + SIM_START;
 			is8am = 2;
@@ -294,7 +296,7 @@ int BaseScenario::initializeEvents(double seedItinerary) {
 			is8am = 1;
 		}
 	}
-	if( i % 4 == 2){
+	if( i % 5 == 2 || i % 5 ==3){
 		if(is6am == 1){
 			timeofRequests = (rand() % (SIM_DURATION/12)) +  (SIM_DURATION/24)*6 + SIM_START;
 			is6am = 2;
@@ -312,7 +314,7 @@ int BaseScenario::initializeEvents(double seedItinerary) {
 			is6am = 1;
 		}
 	}
-	if( i % 4 == 3){
+	if( i % 5 == 4){
 		if(isNight == 1){
 			timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*21 + SIM_START;
 			isNight = 2;
@@ -320,7 +322,8 @@ int BaseScenario::initializeEvents(double seedItinerary) {
 		else if( isNight ==2) {
 			timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*0 + SIM_START;
 			isNight = 3;
-		}if( isNight ==3) {
+		}
+		else if( isNight ==3) {
 			timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*3 + SIM_START;
 			isNight = 1;
 		}
