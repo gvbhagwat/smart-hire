@@ -41,7 +41,9 @@ int main(int argc, char** argv)
 							    NUMBER_OF_CARS,
 								PASSENGER_REQUEST_COUNT,
 								SEED_CAR_LOCATION,
-								SEED_ITINERARY);
+								SEED_ITINERARY,
+								SERVICE_QUALITY,
+								CAR_OPERATION);
 
 	scenario->initializeScenario();
 

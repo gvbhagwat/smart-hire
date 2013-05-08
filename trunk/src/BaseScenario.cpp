@@ -20,7 +20,7 @@ using namespace std;
  * @param seedIti):
  */
 BaseScenario::BaseScenario(EventList& eventList, int _cars, int _cust, double seedCar, double seedIti):
-        Scenario(eventList), nCars(_cars), nCustomerRequests(_cust), seedCarLocation(seedCar), seedItinerary(seedIti) {
+    Scenario(eventList), nCars(_cars), nCustomerRequests(_cust), seedCarLocation(seedCar), seedItinerary(seedIti) {
 
     // open all the simulation dump dat files
     revenewLossesStats.open (CARS_REVENUE_LOSSES_DAT_FILE);
@@ -47,6 +47,33 @@ BaseScenario::BaseScenario(EventList& eventList, int _cars, int _cust, double se
 }
 
 
+BaseScenario::BaseScenario(EventList& eventList, int _cars, int _cust, double seedCar, double seedIti, int modeServQual, int modeCarOp):
+    Scenario(eventList), nCars(_cars), nCustomerRequests(_cust), seedCarLocation(seedCar), seedItinerary(seedIti), modeServiceQuality( modeServQual ),
+	   	modeCarOperation(modeCarOp) {
+
+    // open all the simulation dump dat files
+    revenewLossesStats.open (CARS_REVENUE_LOSSES_DAT_FILE);
+    batteryPowerStats.open(CARS_BATTERY_POWER_DAT_FILE);
+    batteryRechargeCountStats.open(CARS_BATTERY_RECHARGE_COUNT_FILE);
+    revenewEarningStats.open (CARS_REVENUE_EARNINGS_DAT_FILE);
+    revenewTotalStats.open (CARS_REVENUE_TOTAL_DAT_FILE);
+    distanceEarningStats.open (CARS_DISTANCE_EARNINGS_DAT_FILE);
+    distanceLossesStats.open (CARS_DISTANCE_LOSSES_DAT_FILE);
+    distanceTotalStats.open (CARS_DISTANCE_TOTAL_DAT_FILE);
+    servicePerLocationStats.open (SERVICE_PER_LOCATION_STATS_FILE);
+    passengerReqArrivalStats.open(PASSENGER_REQ_ARRIVAL_STATS_FILE);
+
+    printHeader(batteryPowerStats);
+
+    printHeader(batteryRechargeCountStats);
+    printHeader(revenewEarningStats);
+    printHeader(revenewLossesStats);
+    printHeader(revenewTotalStats);
+    printHeader(distanceEarningStats);
+    printHeader(distanceLossesStats);
+    printHeader(distanceTotalStats);
+    printHeaderServicePerLocation(servicePerLocationStats);
+}
 /**
  * @brief
  */
@@ -66,6 +93,15 @@ BaseScenario::~BaseScenario() {
     // destroy the event List
 }
 
+int BaseScenario::getModeCarOperation(){
+		return modeCarOperation;
+}
+
+int BaseScenario::getModeServiceQuality(){
+		return modeServiceQuality;
+}
+
+
 // protected functions
 
 /**
@@ -83,7 +119,10 @@ void BaseScenario::printHeader(ofstream& outputstream) {
 }
 
 void BaseScenario::printHeaderServicePerLocation(ofstream& outputstream) {
-    outputstream<<"Time\t"<<"sourceId\t"<<"destId\t"<<"waitTime\t"<<"result"<<endl;
+	if( modeServiceQuality == GUARANTEED_TIME )
+	    outputstream<<"Time\t"<<"sourceId\t"<<"destId\t"<<"waitTime\t"<<"result"<<endl;
+	else
+	    outputstream<<"Time\t"<<"sourceId\t"<<"destId\t"<<"waitTime\t"<<"delay\t"<<"result"<<endl;
 }
 /**
  * @brief
@@ -243,14 +282,14 @@ int BaseScenario::initializeEvents(double seedItinerary) {
     int timeofRequests;
     int nStations = (int)this->stations.size();
     int is9am,is8am,isNight,is6am;
-	
-    //randomizing the output
-	srand(seedItinerary);
 
-	is9am=1;
-	is8am=1;
-	is6am=1;
-	isNight=1;
+    //randomizing the output
+    srand(seedItinerary);
+
+    is9am=1;
+    is8am=1;
+    is6am=1;
+    isNight=1;
 
     for (int i = 0; i < this->nCustomerRequests; i++) {
 
@@ -264,75 +303,76 @@ int BaseScenario::initializeEvents(double seedItinerary) {
         timeofRequests = (rand() % (SIM_DURATION)) + SIM_START;
 
         //cout<<"Request generated at time : "<<timeofRequests<<" from source = "<<
-	//sourceLocationId<<" to destination = "<<destinationLocationId<<" wait = "<<waitingTime<<endl;
+        //sourceLocationId<<" to destination = "<<destinationLocationId<<" wait = "<<waitingTime<<endl;
 
 
-	//Code to genarates passenger arrival request as per 9AM 5PM distribution	
-	if( i % 5 == 0){
-		if(is9am == 1){
-			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*9 + SIM_START;
-			is9am = 0;
-		}
-		else{
-			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*17 + SIM_START;
-			is9am = 1;
-		}
-	}
-	if( i % 5 == 1){
-		if(is8am == 1){
-			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*8 + SIM_START;
-			is8am = 2;
-		}
-		else if(is8am == 2){
-			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*10 + SIM_START;
-			is8am = 3;
-		}
-		else if(is8am == 3){
-			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*16 + SIM_START;
-			is8am = 4;
-		}
-		else if(is8am == 4){
-			timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*18 + SIM_START;
-			is8am = 1;
-		}
-	}
-	if( i % 5 == 2 || i % 5 ==3){
-		if(is6am == 1){
-			timeofRequests = (rand() % (SIM_DURATION/12)) +  (SIM_DURATION/24)*6 + SIM_START;
-			is6am = 2;
-		}
-		else if(is6am == 2){
-			timeofRequests = (rand() % (SIM_DURATION/12)) +  (SIM_DURATION/24)*11 + SIM_START;
-			is6am = 3;
-		}
-		else if(is6am == 3){
-			timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*13 + SIM_START;
-			is6am = 4;
-		}
-		else if(is6am == 4){
-			timeofRequests = (rand() % (SIM_DURATION/12)) +  (SIM_DURATION/24)*19 + SIM_START;
-			is6am = 1;
-		}
-	}
-	if( i % 5 == 4){
-		if(isNight == 1){
-			timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*21 + SIM_START;
-			isNight = 2;
-		}
-		else if( isNight ==2) {
-			timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*0 + SIM_START;
-			isNight = 3;
-		}
-		else if( isNight ==3) {
-			timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*3 + SIM_START;
-			isNight = 1;
-		}
+        //Code to genarates passenger arrival request as per 9AM 5PM distribution
+        if( i % 5 == 0) {
+            if(is9am == 1) {
+                timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*9 + SIM_START;
+                is9am = 0;
+            }
+            else {
+                timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*17 + SIM_START;
+                is9am = 1;
+            }
+        }
+        if( i % 5 == 1) {
+            if(is8am == 1) {
+                timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*8 + SIM_START;
+                is8am = 2;
+            }
+            else if(is8am == 2) {
+                timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*10 + SIM_START;
+                is8am = 3;
+            }
+            else if(is8am == 3) {
+                timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*16 + SIM_START;
+                is8am = 4;
+            }
+            else if(is8am == 4) {
+                timeofRequests = (rand() % (SIM_DURATION/24)) +  (SIM_DURATION/24)*18 + SIM_START;
+                is8am = 1;
+            }
+        }
+        if( i % 5 == 2 || i % 5 ==3) {
+            if(is6am == 1) {
+                timeofRequests = (rand() % (SIM_DURATION/12)) +  (SIM_DURATION/24)*6 + SIM_START;
+                is6am = 2;
+            }
+            else if(is6am == 2) {
+                timeofRequests = (rand() % (SIM_DURATION/12)) +  (SIM_DURATION/24)*11 + SIM_START;
+                is6am = 3;
+            }
+            else if(is6am == 3) {
+                timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*13 + SIM_START;
+                is6am = 4;
+            }
+            else if(is6am == 4) {
+                timeofRequests = (rand() % (SIM_DURATION/12)) +  (SIM_DURATION/24)*19 + SIM_START;
+                is6am = 1;
+            }
+        }
+        if( i % 5 == 4) {
+            if(isNight == 1) {
+                timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*21 + SIM_START;
+                isNight = 2;
+            }
+            else if( isNight ==2) {
+                timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*0 + SIM_START;
+                isNight = 3;
+            }
+            else if( isNight ==3) {
+                timeofRequests = (rand() % (SIM_DURATION/8)) +  (SIM_DURATION/24)*3 + SIM_START;
+                isNight = 1;
+            }
 
-	}
+        }
 
-	//Print Pasenger request Arrival time in file for analysis 
-	passengerReqArrivalStats<<timeofRequests<<endl;
-        getEventList().push(new PassengerRequestEvent(timeofRequests,*this,source,dest,waitingTime));
+        //Print Pasenger request Arrival time in file for analysis
+        passengerReqArrivalStats<<timeofRequests<<endl;
+
+	    getEventList().push(new PassengerRequestEvent(timeofRequests,*this,source,dest,waitingTime));
 
 
     }
@@ -470,7 +510,18 @@ int BaseScenario::updateServicePerLocationStats(double time, int sourceId, int d
     return 0;
 }
 
-
+/**
+ * @brief
+ *
+ * @param time
+ *
+ * @return
+ */
+int BaseScenario::updateServicePerLocationStats(double time, int sourceId, int destId, int wait, int delay, int result) {
+    // cout<<"update stats called with result "<<result<<endl;
+    servicePerLocationStats<<time<<"\t"<<sourceId<<"\t"<<destId<<"\t"<<wait<<"\t"<<delay<<"\t"<<result<<endl;
+    return 0;
+}
 /**
  * @brief
  *

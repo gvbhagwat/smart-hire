@@ -19,6 +19,10 @@ class BaseScenario: public Scenario{
 	int nCustomerRequests;
 	double seedCarLocation;
 	double seedItinerary;
+	double seedRechargeLocation;
+
+	int modeServiceQuality;
+	int modeCarOperation;
 
 	ofstream batteryPowerStats,
 		batteryRechargeCountStats,
@@ -67,11 +71,17 @@ class BaseScenario: public Scenario{
 	// From the base class
 
 	BaseScenario(EventList& eventList, int nCars, int CustomerReuqests, double seedCarLocation, double seedItinerary);
+	BaseScenario(EventList& eventList, int nCars, int CustomerReuqests, double seedCarLocation, double seedItinerary, int modeServiceQuality, int modeCarOperation);
 	~BaseScenario();
 	int initializeScenario();
 	int updateStatistics(double time);
 
 	int updateServicePerLocationStats(double time, int sourceId, int destId, int waitingTime, int result);
+	int updateServicePerLocationStats(double time, int sourceId, int destId, int waitingTime, int delay, int result);
+
+	int getModeServiceQuality();
+	int getModeCarOperation();
+	
 
 };
 
